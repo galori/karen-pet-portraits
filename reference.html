@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karen's Pet Portraits | San Francisco Artist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+    <style>
+        :root {
+            --primary-color: #E7EFC7;
+            --secondary-color: #AEC8A4;
+            --tertiary-color: #8A784E;
+            --dark-color: #3B3B1A;
+        }
+        .theme-selector {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+        }
+        .gallery-item {
+            position: relative;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+        .download-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .gallery-item:hover .download-overlay {
+            opacity: 1;
+        }
+        .download-icon {
+            color: white;
+            font-size: 2rem;
+            background-color: rgba(0,0,0,0.5);
+            padding: 10px;
+            border-radius: 50%;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #8A784E;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #3B3B1A;
+        }
+        /* Animation for gallery items */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .gallery-item {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        .mobile-menu.open {
+            max-height: 1000px;
+            transition: max-height 0.5s ease-in;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Theme selector - to be removed in production -->
+    <div class="theme-selector">
+        <select id="themeSelect" class="p-2 rounded shadow-lg bg-white">
+            <option value="default">Default Theme</option>
+            <option value="earthy">Earthy Tones</option>
+            <option value="pastel">Soft Pastels</option>
+            <option value="vibrant">Vibrant Colors</option>
+            <option value="monochrome">Black & White</option>
+            <option value="warm">Warm Colors</option>
+            <option value="cool">Cool Colors</option>
+            <option value="neutral">Neutrals</option>
+            <option value="spring">Spring Colors</option>
+            <option value="autumn">Autumn Colors</option>
+        </select>
+    </div>
+
+    <!-- Header -->
+    <header class="py-6 px-4 shadow-md" style="background-color: #E7EFC7;">
+        <div class="container mx-auto flex justify-between items-center">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-serif font-bold" style="color: #3B3B1A;">Karen's Pet Portraits</h1>
+                <h2 class="text-sm md:text-lg italic" style="color: #8A784E;">San Francisco based artist specializing in graphite, colored pencil, and ballpoint pen</h2>
+            </div>
+            <div class="hidden md:flex space-x-6">
+                <a href="#home" class="hover:underline" style="color: #3B3B1A;">Home</a>
+                <a href="#gallery" class="hover:underline" style="color: #3B3B1A;">Gallery</a>
+                <a href="#commissions" class="hover:underline" style="color: #3B3B1A;">Commissions</a>
+                <a href="#contact" class="hover:underline" style="color: #3B3B1A;">Contact</a>
+            </div>
+            <button id="mobileMenuButton" class="md:hidden text-2xl" style="color: #3B3B1A;">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden">
+            <div class="flex flex-col space-y-2 py-4">
+                <a href="#home" class="block px-4 py-2 hover:bg-gray-100 rounded" style="color: #3B3B1A;">Home</a>
+                <a href="#gallery" class="block px-4 py-2 hover:bg-gray-100 rounded" style="color: #3B3B1A;">Gallery</a>
+                <a href="#commissions" class="block px-4 py-2 hover:bg-gray-100 rounded" style="color: #3B3B1A;">Commissions</a>
+                <a href="#contact" class="block px-4 py-2 hover:bg-gray-100 rounded" style="color: #3B3B1A;">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="py-16 px-4" style="background-color: #AEC8A4;">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-8 md:mb-0 md:pr-8">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4" style="color: #3B3B1A;">Karen Shrira Steinitz</h2>
+                <p class="text-lg md:text-xl mb-6" style="color: #3B3B1A;">Capturing the unique personality and spirit of your beloved pets through detailed colored pencil portraits.</p>
+                <div class="flex space-x-4">
+                    <a href="#commissions" class="px-6 py-3 rounded-lg font-bold text-white hover:bg-opacity-90 transition" style="background-color: #8A784E;">Commission a Portrait</a>
+                    <a href="#gallery" class="px-6 py-3 rounded-lg font-bold hover:bg-opacity-90 transition border" style="color: #3B3B1A; border-color: #3B3B1A;">View Gallery</a>
+                </div>
+            </div>
+            <div class="md:w-1/2 relative">
+                <div class="relative">
+                    <img src="https://images.unsplash.com/photo-1561037404-61cd46aa615b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Dog portrait example" class="rounded-lg shadow-xl w-full h-96 object-cover">
+                    <div class="absolute -bottom-4 -right-4 bg-white px-4 py-2 rounded shadow-lg">
+                        <p class="text-sm" style="color: #8A784E;">"Portrait of Max" - Colored Pencil</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="py-16 px-4" style="background-color: #E7EFC7;">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center" style="color: #3B3B1A;">Gallery</h2>
+            
+            <!-- Gallery Filter -->
+            <div class="flex justify-center mb-12 space-x-4">
+                <button class="category-btn active px-4 py-2 rounded-lg font-medium transition" data-category="all" style="background-color: #8A784E; color: white;">All Portraits</button>
+                <button class="category-btn px-4 py-2 rounded-lg font-medium transition" data-category="dogs" style="background-color: #AEC8A4; color: #3B3B1A;">Dogs</button>
+                <button class="category-btn px-4 py-2 rounded-lg font-medium transition" data-category="cats" style="background-color: #AEC8A4; color: #3B3B1A;">Cats</button>
+                <button class="category-btn px-4 py-2 rounded-lg font-medium transition" data-category="people" style="background-color: #AEC8A4; color: #3B3B1A;">People</button>
+            </div>
+            
+            <!-- Masonry Gallery -->
+            <div class="grid masonry-grid" data-masonry='{ "itemSelector": ".gallery-item", "columnWidth": ".grid-sizer", "percentPosition": true }'>
+                <div class="grid-sizer w-full md:w-1/2 lg:w-1/3 p-2"></div>
+                
+                <!-- Dog Portraits -->
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="dogs">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1587402092301-725e37c70fd8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1364&q=80" alt="Dog portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="dogs">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1588943211346-0908a1e5a804?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1635&q=80" alt="Dog portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="dogs">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1530281700549-e82e7bf110d6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=776&q=80" alt="Dog portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Cat Portraits -->
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="cats">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1491485880348-85d48a9e5312?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Cat portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="cats">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1686&q=80" alt="Cat portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="cats">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1573865526739-10659fec78a5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1615&q=80" alt="Cat portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- People Portraits -->
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="people">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="People portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="people">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="People portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="people">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1503104834685-7205e8607eb9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80" alt="People portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- More sample images - in a real site these would be actual portraits -->
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="dogs">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1559251602-caca6c1e0e1b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Dog portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="cats">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1516054575922-f0b8eeadec1a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80" alt="Cat portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="gallery-item w-full md:w-1/2 lg:w-1/3 p-2" data-category="people">
+                    <div class="relative bg-white rounded-lg overflow-hidden shadow-lg">
+                        <img src="https://images.unsplash.com/photo-1499996860823-5214fcc65f8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1662&q=80" alt="People portrait" class="w-full h-auto">
+                        <div class="download-overlay">
+                            <i class="fas fa-download download-icon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commissions Section -->
+    <section id="commissions" class="py-16 px-4" style="background-color: #8A784E; color: white;">
+        <div class="container mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Commission a Portrait</h2>
+                <p class="text-xl max-w-3xl mx-auto">Each portrait is a unique work of art that captures the special bond you share with your pet.</p>
+            </div>
+            
+            <div class="flex flex-col md:flex-row gap-8">
+                <div class="md:w-1/2 bg-white rounded-lg shadow-xl p-8" style="color: #3B3B1A;">
+                    <h3 class="text-2xl font-bold mb-4">Portrait Details</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-paint-brush mt-1 mr-3" style="color: #8A784E;"></i>
+                            <div>
+                                <h4 class="font-bold">Medium</h4>
+                                <p>Colored pencil on high-quality archival paper</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-ruler-combined mt-1 mr-3" style="color: #8A784E;"></i>
+                            <div>
+                                <h4 class="font-bold">Size</h4>
+                                <p>9" x 12" (one pet) - $350.00 plus shipping</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-clock mt-1 mr-3" style="color: #8A784E;"></i>
+                            <div>
+                                <h4 class="font-bold">Time</h4>
+                                <p>Each portrait takes 12-15 hours to complete with a turnaround time of 4-6 weeks</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-image mt-1 mr-3" style="color: #8A784E;"></i>
+                            <div>
+                                <h4 class="font-bold">Reference Photo</h4>
+                                <p>I work directly from a reference photo - the quality of your image is crucial for the best results</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="md:w-1/2 bg-white rounded-lg shadow-xl p-8" style="color: #3B3B1A;">
+                    <h3 class="text-2xl font-bold mb-4">Reference Photo Guide</h3>
+                    <div class="space-y-6">
+                        <div>
+                            <h4 class="font-bold text-lg mb-2">Quality Matters</h4>
+                            <p>The quality of your reference photo is vital to helping me capture your pet on paper. Here's what makes a great reference photo:</p>
+                        </div>
+                        <div class="p-4 rounded-lg" style="background-color: #E7EFC7;">
+                            <h4 class="font-bold mb-2">✓ Ideal Photos Have:</h4>
+                            <ul class="list-disc pl-5">
+                                <li>Natural sunlight (best lighting)</li>
+                                <li>Clear, visible details of the face</li>
+                                <li>Complete image of face and torso</li>
+                                <li>Taken at eye level and close proximity</li>
+                                <li>Visible pupils and light reflection in eyes</li>
+                            </ul>
+                        </div>
+                        <div class="p-4 rounded-lg" style="background-color: #E7EFC7;">
+                            <h4 class="font-bold mb-2">✗ Avoid These:</h4>
+                            <ul class="list-disc pl-5">
+                                <li>Blurry or distant images</li>
+                                <li>Poor lighting or shadows on the face</li>
+                                <li>Photos taken at awkward angles</li>
+                                <li>Overly filtered or edited images</li>
+                                <li>Flash photography (creates unnatural reflections)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="italic">"Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. Have fun with the photos!"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-16 px-4" style="background-color: #AEC8A4;">
+        <div class="container mx-auto">
+            <div class="max-w-4xl mx-auto bg-white rounded-lg shadow-xl overflow-hidden">
+                <div class="md:flex">
+                    <div class="md:w-1/2 p-8" style="background-color: #3B3B1A; color: white;">
+                        <h2 class="text-3xl font-bold mb-6">Get in Touch</h2>
+                        <p class="mb-6">Ready to commission a portrait or have questions? Fill out the form or contact me directly.</p>
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Email</h4>
+                                    <p>karen@petportraitsbykaren.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-map-marker-alt mr-3"></i>
+                                <div>
+                                    <h4 class="font-bold">Location</h4>
+                                    <p>San Francisco, California</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center pt-4">
+                                <a href="https://www.instagram.com/karenshrirasteinitz/" target="_blank" class="text-2xl mr-4 hover:opacity-80">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                <a href="#" class="text-2xl mr-4 hover:opacity-80">
+                                    <i class="fab fa-facebook"></i>
+                                </a>
+                                <a href="#" class="text-2xl hover:opacity-80">
+                                    <i class="fab fa-pinterest"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="md:w-1/2 p-8">
+                        <form id="contactForm" class="space-y-4">
+                            <div>
+                                <label for="name" class="block mb-1" style="color: #3B3B1A;">Name</label>
+                                <input type="text" id="name" name="name" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2" style="border-color: #8A784E; focus:ring-8A784E;">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-1" style="color: #3B3B1A;">Email</label>
+                                <input type="email" id="email" name="email" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2" style="border-color: #8A784E; focus:ring-8A784E;">
+                            </div>
+                            <div>
+                                <label for="subject" class="block mb-1" style="color: #3B3B1A;">Subject</label>
+                                <select id="subject" name="subject" class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2" style="border-color: #8A784E; focus:ring-8A784E;">
+                                    <option value="commission">Portrait Commission</option>
+                                    <option value="question">General Question</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="message" class="block mb-1" style="color: #3B3B1A;">Message</label>
+                                <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2" style="border-color: #8A784E; focus:ring-8A784E;"></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 rounded-lg font-bold text-white hover:bg-opacity-90 transition" style="background-color: #8A784E;">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4" style="background-color: #3B3B1A; color: #E7EFC7;">
+        <div class="container mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-2xl font-serif font-bold">Karen's Pet Portraits</h3>
+                    <p>San Francisco based artist specializing in pet portraits</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:underline">Privacy Policy</a>
+                    <a href="#" class="hover:underline">Terms of Service</a>
+                </div>
+            </div>
+            <div class="mt-8 pt-6 border-t text-center" style="border-color: #8A784E;">
+                <p>&copy; <span id="currentYear"></span> Karen Shrira Steinitz. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+        });
+        
+        // Gallery filtering
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                // Add active class to clicked button
+                button.classList.add('active');
+                
+                const category = button.getAttribute('data-category');
+                
+                galleryItems.forEach(item => {
+                    if (category === 'all' || item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+                
+                // Re-layout masonry after filtering
+                setTimeout(() => {
+                    const msnry = new Masonry('.masonry-grid', {
+                        itemSelector: '.gallery-item',
+                        columnWidth: '.grid-sizer',
+                        percentPosition: true
+                    });
+                    msnry.layout();
+                }, 100);
+            });
+        });
+        
+        // Image download functionality
+        document.querySelectorAll('.gallery-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                if (e.target.classList.contains('download-icon') || e.target.classList.contains('download-overlay')) {
+                    const imgSrc = item.querySelector('img').src;
+                    const a = document.createElement('a');
+                    a.href = imgSrc;
+                    a.download = 'pet-portrait.jpg';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                }
+            });
+        });
+        
+        // Set current year in footer
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        // Theme selector - just for preview, would be removed in production
+        const themeSelect = document.getElementById('themeSelect');
+        const root = document.documentElement;
+        
+        themeSelect.addEventListener('change', () => {
+            const theme = themeSelect.value;
+            
+            switch(theme) {
+                case 'earthy':
+                    root.style.setProperty('--primary-color', '#E8E1D1');
+                    root.style.setProperty('--secondary-color', '#C2B8A3');
+                    root.style.setProperty('--tertiary-color', '#A67C52');
+                    root.style.setProperty('--dark-color', '#4A3A27');
+                    break;
+                case 'pastel':
+                    root.style.setProperty('--primary-color', '#F5E8E0');
+                    root.style.setProperty('--secondary-color', '#E7CFC8');
+                    root.style.setProperty('--tertiary-color', '#D4A5A5');
+                    root.style.setProperty('--dark-color', '#725D68');
+                    break;
+                case 'vibrant':
+                    root.style.setProperty('--primary-color', '#FFE5D9');
+                    root.style.setProperty('--secondary-color', '#FFCAD4');
+                    root.style.setProperty('--tertiary-color', '#F4ACB7');
+                    root.style.setProperty('--dark-color', '#9D8189');
+                    break;
+                case 'monochrome':
+                    root.style.setProperty('--primary-color', '#F5F5F5');
+                    root.style.setProperty('--secondary-color', '#E0E0E0');
+                    root.style.setProperty('--tertiary-color', '#9E9E9E');
+                    root.style.setProperty('--dark-color', '#212121');
+                    break;
+                case 'warm':
+                    root.style.setProperty('--primary-color', '#FFEDD8');
+                    root.style.setProperty('--secondary-color', '#F0C6A4');
+                    root.style.setProperty('--tertiary-color', '#E88E6B');
+                    root.style.setProperty('--dark-color', '#6B3B1D');
+                    break;
+                case 'cool':
+                    root.style.setProperty('--primary-color', '#E0F2FE');
+                    root.style.setProperty('--secondary-color', '#BAE6FD');
+                    root.style.setProperty('--tertiary-color', '#7DD3FC');
+                    root.style.setProperty('--dark-color', '#0C4A6E');
+                    break;
+                case 'neutral':
+                    root.style.setProperty('--primary-color', '#F5F3F0');
+                    root.style.setProperty('--secondary-color', '#E6E2DD');
+                    root.style.setProperty('--tertiary-color', '#C8C0B7');
+                    root.style.setProperty('--dark-color', '#4E4842');
+                    break;
+                case 'spring':
+                    root.style.setProperty('--primary-color', '#F0F7D2');
+                    root.style.setProperty('--secondary-color', '#B5D99C');
+                    root.style.setProperty('--tertiary-color', '#8AA674');
+                    root.style.setProperty('--dark-color', '#466060');
+                    break;
+                case 'autumn':
+                    root.style.setProperty('--primary-color', '#FFE8D6');
+                    root.style.setProperty('--secondary-color', '#DDBEA9');
+                    root.style.setProperty('--tertiary-color', '#CB997E');
+                    root.style.setProperty('--dark-color', '#6B4A3D');
+                    break;
+                default:
+                    // Reset to original colors
+                    root.style.setProperty('--primary-color', '#E7EFC7');
+                    root.style.setProperty('--secondary-color', '#AEC8A4');
+                    root.style.setProperty('--tertiary-color', '#8A784E');
+                    root.style.setProperty('--dark-color', '#3B3B1A');
+                    break;
+            }
+        });
+        
+        // Initialize Masonry
+        document.addEventListener('DOMContentLoaded', () => {
+            const msnry = new Masonry('.masonry-grid', {
+                itemSelector: '.gallery-item',
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+            });
+            
+            // Handle form submission
+            const contactForm = document.getElementById('contactForm');
+            if (contactForm) {
+                contactForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    alert('Thank you for your message! Karen will get back to you soon.');
+                    contactForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>

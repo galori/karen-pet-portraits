@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paws & Pencils | Pet Portrait Artist</title>
+    <title>Karen Shrira Steinitz | Pet Portrait Artist</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -82,7 +82,7 @@
                         <!-- Logo -->
                         <a href="#" class="flex items-center py-4 px-2">
                             <i class="fas fa-paw text-amber-600 text-2xl mr-2"></i>
-                            <span class="font-semibold text-gray-900 text-lg">Paws & Pencils</span>
+                            <span class="font-semibold text-gray-900 text-lg">Pet Portraits</span>
                         </a>
                     </div>
                 </div>
@@ -127,7 +127,7 @@
     <!-- Hero Section -->
     <section id="home" class="hero-bg h-screen flex items-center justify-center text-white relative">
         <div class="text-center px-4">
-            <h1 class="text-4xl md:text-6xl font-bold mb-6">Handcrafted Pet Portraits</h1>
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Karen Shrira Steinitz</h1>
             <p class="text-xl md:text-2xl mb-8">Exquisite colored pencil drawings that capture your pet's unique personality</p>
             <a href="#contact" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">Commission Yours Today</a>
         </div>
@@ -341,37 +341,72 @@
                 </div>
             </div>
 
-            <div class="mt-12 bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto">
-                <h3 class="text-xl font-bold mb-4 text-center">Frequently Asked Questions</h3>
-                <div class="space-y-4">
-                    <div x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex justify-between items-center py-2 px-4 bg-amber-50 rounded-lg">
-                            <span class="font-medium">How do I order a portrait?</span>
-                            <i :class="open ? 'fas fa-minus' : 'fas fa-plus'" class="text-amber-600"></i>
-                        </button>
-                        <div x-show="open" x-collapse class="px-4 py-2 text-gray-600">
-                            Simply fill out the contact form below with details about your pet and the type of portrait you'd like. I'll get back to you within 1-2 business days to discuss the project and provide a timeline.
+            <div class="mt-12">
+                <section class="py-8 px-4 bg-white rounded-lg shadow-md max-w-3xl mx-auto">
+                    <div class="flex flex-col md:flex-row gap-8">
+                        <div class="md:w-1/2">
+                            <h3 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-paint-brush mr-2 text-amber-600"></i>Portrait Details</h3>
+                            <ul class="space-y-4">
+                                <li class="flex items-start">
+                                    <i class="fas fa-paint-brush mt-1 mr-3 text-amber-600"></i>
+                                    <div>
+                                        <span class="font-bold">Medium:</span> Colored pencil on high-quality archival paper
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-ruler-combined mt-1 mr-3 text-amber-600"></i>
+                                    <div>
+                                        <span class="font-bold">Size:</span> 9" x 12" (one pet) - $350.00 plus shipping
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-clock mt-1 mr-3 text-amber-600"></i>
+                                    <div>
+                                        <span class="font-bold">Time:</span> Each portrait takes 12-15 hours to complete with a turnaround time of 4-6 weeks
+                                    </div>
+                                </li>
+                                <li class="flex items-start">
+                                    <i class="fas fa-image mt-1 mr-3 text-amber-600"></i>
+                                    <div>
+                                        <span class="font-bold">Reference Photo:</span> I work directly from a reference photo - the quality of your image is crucial for the best results
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="md:w-1/2">
+                            <h3 class="text-2xl font-bold mb-4 flex items-center"><i class="fas fa-camera mr-2 text-amber-600"></i>Reference Photo Guide</h3>
+                            <div class="space-y-6">
+                                <div>
+                                    <h4 class="font-bold text-lg mb-2">Quality Matters</h4>
+                                    <p class="mb-2">The quality of your reference photo is vital to helping me capture your pet on paper. Here's what makes a great reference photo:</p>
+                                </div>
+                                <div class="p-4 rounded-lg bg-amber-50">
+                                    <h4 class="font-bold mb-2 text-amber-700">✓ Ideal Photos Have:</h4>
+                                    <ul class="list-disc pl-5 text-gray-700">
+                                        <li>Natural sunlight (best lighting)</li>
+                                        <li>Clear, visible details of the face</li>
+                                        <li>Complete image of face and torso</li>
+                                        <li>Taken at eye level and close proximity</li>
+                                        <li>Visible pupils and light reflection in eyes</li>
+                                    </ul>
+                                </div>
+                                <div class="p-4 rounded-lg bg-amber-50">
+                                    <h4 class="font-bold mb-2 text-amber-700">✗ Avoid These:</h4>
+                                    <ul class="list-disc pl-5 text-gray-700">
+                                        <li>Blurry or distant images</li>
+                                        <li>Poor lighting or shadows on the face</li>
+                                        <li>Photos taken at awkward angles</li>
+                                        <li>Overly filtered or edited images</li>
+                                        <li>Flash photography (creates unnatural reflections)</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <p class="italic text-gray-600">"Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. Have fun with the photos!"</p>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex justify-between items-center py-2 px-4 bg-amber-50 rounded-lg">
-                            <span class="font-medium">What photos do I need to provide?</span>
-                            <i :class="open ? 'fas fa-minus' : 'fas fa-plus'" class="text-amber-600"></i>
-                        </button>
-                        <div x-show="open" x-collapse class="px-4 py-2 text-gray-600">
-                            High-quality, well-lit photos that clearly show your pet's features and personality are ideal. I'll guide you through the best way to capture your pet if needed. Multiple angles help me understand their unique characteristics.
-                        </div>
-                    </div>
-                    <div x-data="{ open: false }">
-                        <button @click="open = !open" class="w-full flex justify-between items-center py-2 px-4 bg-amber-50 rounded-lg">
-                            <span class="font-medium">Do you offer framing?</span>
-                            <i :class="open ? 'fas fa-minus' : 'fas fa-plus'" class="text-amber-600"></i>
-                        </button>
-                        <div x-show="open" x-collapse class="px-4 py-2 text-gray-600">
-                            Yes! I partner with a professional framing service and can arrange for your portrait to be beautifully framed before shipping. Additional costs apply based on frame selection.
-                        </div>
-                    </div>
-                </div>
+                </section>
             </div>
         </div>
     </section>
@@ -531,7 +566,7 @@
                 <div>
                     <h3 class="text-xl font-bold mb-4 flex items-center">
                         <i class="fas fa-paw text-amber-600 mr-2"></i>
-                        <span>Paws & Pencils</span>
+                        <span>Pet Portraits</span>
                     </h3>
                     <p class="text-gray-400">Creating timeless pet portraits that celebrate your beloved companion's unique spirit.</p>
                 </div>
