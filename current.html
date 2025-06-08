@@ -40,6 +40,36 @@
         .custom-shape-divider-bottom-1688386754 .shape-fill {
             fill: #f9f5f0;
         }
+        /* Masonry columns for responsive breakpoints */
+        #masonry-gallery {
+            column-count: 1;
+            column-gap: 1.5rem;
+        }
+        @media (min-width: 640px) {
+            #masonry-gallery {
+                column-count: 2 !important;
+            }
+        }
+        @media (min-width: 1024px) {
+            #masonry-gallery {
+                column-count: 3 !important;
+            }
+        }
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1.5rem;
+            background: none;
+            box-shadow: none;
+            border-radius: 0;
+            padding: 0;
+        }
+        .gallery-item img {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -116,176 +146,201 @@
             <h2 class="text-3xl font-bold text-center mb-4">Portfolio Gallery</h2>
             <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">Each portrait is meticulously hand-drawn with professional grade colored pencils on high-quality paper</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Gallery Item 1 -->
-                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md">
-                    <img src="https://images.unsplash.com/photo-1594149929911-78975a43d4f5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Golden Retriever portrait" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Golden Sunshine</h3>
-                        <p class="text-gray-600">Colored pencil on archival paper, 11"x14"</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-amber-600 font-bold">Completed 2023</span>
-                            <button class="view-btn bg-amber-600 hover:bg-amber-700 text-white py-1 px-3 rounded-full text-sm transition duration-300" data-modal="modal1">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 2 -->
-                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md">
-                    <img src="https://images.unsplash.com/photo-1503256207526-0d5d80fa2f47?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tabby Cat portrait" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Majestic Mocha</h3>
-                        <p class="text-gray-600">Colored pencil on archival paper, 8"x10"</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-amber-600 font-bold">Completed 2023</span>
-                            <button class="view-btn bg-amber-600 hover:bg-amber-700 text-white py-1 px-3 rounded-full text-sm transition duration-300" data-modal="modal2">View Details</button>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Gallery Item 3 -->
-                <div class="gallery-item bg-white rounded-lg overflow-hidden shadow-md">
-                    <img src="https://images.unsplash.com/photo-1551290464-66719418ca54?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="French Bulldog portrait" class="w-full h-64 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Sir Wrinkles</h3>
-                        <p class="text-gray-600">Colored pencil on archival paper, 11"x14"</p>
-                        <div class="mt-4 flex justify-between items-center">
-                            <span class="text-amber-600 font-bold">Completed 2023</span>
-                            <button class="view-btn bg-amber-600 hover:bg-amber-700 text-white py-1 px-3 rounded-full text-sm transition duration-300" data-modal="modal3">View Details</button>
-                        </div>
-                    </div>
-                </div>
+            <!-- Gallery Category Buttons -->
+            <div class="flex justify-center mb-8 space-x-4">
+                <button id="btn-dogs" class="gallery-filter-btn bg-amber-600 text-white font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Dogs</button>
+                <button id="btn-cats" class="gallery-filter-btn bg-white text-amber-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Cats</button>
+                <button id="btn-people" class="gallery-filter-btn bg-white text-amber-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">People</button>
             </div>
-        </div>
-    </section>
 
-    <!-- About Section -->
-    <section id="about" class="py-20 px-4 bg-white">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
-                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Artist working on portrait" class="rounded-lg shadow-xl w-full">
+            <!-- Masonry Gallery -->
+            <div id="masonry-gallery" class="masonry-gallery">
+                <!-- Dog Images -->
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/600" alt="Dog 1">
                 </div>
-                <div class="md:w-1/2">
-                    <h2 class="text-3xl font-bold mb-6">About the Artist</h2>
-                    <p class="text-gray-600 mb-4">Hi, I'm Sarah Miller, a passionate pet portrait artist specializing in colored pencil drawings. With over 10 years of experience, I've dedicated my career to capturing the unique personalities and special bond between pets and their owners.</p>
-                    <p class="text-gray-600 mb-4">Each portrait takes approximately 20-40 hours to complete, depending on size and complexity. I work exclusively with lightfast, professional grade colored pencils that resist fading, ensuring your portrait remains vibrant for generations.</p>
-                    <p class="text-gray-600 mb-6">My process begins with studying your pet's photos to understand their unique characteristics. Then I layer colors gradually, building up texture and depth to create a lifelike representation full of personality.</p>
-                    <div class="flex space-x-4">
-                        <div class="bg-amber-50 p-4 rounded-lg text-center flex-1">
-                            <i class="fas fa-award text-amber-600 text-3xl mb-2"></i>
-                            <h3 class="font-bold">Award Winning</h3>
-                            <p class="text-sm text-gray-600">5 time Pet Art Show winner</p>
-                        </div>
-                        <div class="bg-amber-50 p-4 rounded-lg text-center flex-1">
-                            <i class="fas fa-pencil-alt text-amber-600 text-3xl mb-2"></i>
-                            <h3 class="font-bold">500+ Portraits</h3>
-                            <p class="text-sm text-gray-600">Completed with love</p>
-                        </div>
-                    </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/300" alt="Dog 2">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/500" alt="Dog 3">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/450" alt="Dog 4">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/700" alt="Dog 5">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/350" alt="Dog 6">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/800" alt="Dog 7">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/400" alt="Dog 8">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/550" alt="Dog 9">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/650" alt="Dog 10">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/375" alt="Dog 11">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/725" alt="Dog 12">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/420" alt="Dog 13">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/480" alt="Dog 14">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/520" alt="Dog 15">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/600" alt="Dog 16">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/340" alt="Dog 17">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/800" alt="Dog 18">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/410" alt="Dog 19">
+                </div>
+                <div class="gallery-item category-dogs">
+                    <img src="https://placedog.net/400/390" alt="Dog 20">
+                </div>
+                <!-- Add more dog images as needed, up to 30+ -->
+                <!-- Cat Images -->
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/600" alt="Cat 1">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/350" alt="Cat 2">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/500" alt="Cat 3">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/450" alt="Cat 4">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/700" alt="Cat 5">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/375" alt="Cat 6">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/800" alt="Cat 7">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/400" alt="Cat 8">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/550" alt="Cat 9">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/650" alt="Cat 10">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/420" alt="Cat 11">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/725" alt="Cat 12">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/480" alt="Cat 13">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/520" alt="Cat 14">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/340" alt="Cat 15">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/410" alt="Cat 16">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/390" alt="Cat 17">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/600" alt="Cat 18">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/360" alt="Cat 19">
+                </div>
+                <div class="gallery-item category-cats hidden">
+                    <img src="https://www.placecats.com/400/370" alt="Cat 20">
+                </div>
+                <!-- People Images (now using placebear.com) -->
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/600" alt="Bear 1">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/350" alt="Bear 2">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/500" alt="Bear 3">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/450" alt="Bear 4">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/700" alt="Bear 5">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/375" alt="Bear 6">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/800" alt="Bear 7">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/400" alt="Bear 8">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/550" alt="Bear 9">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/650" alt="Bear 10">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/420" alt="Bear 11">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/725" alt="Bear 12">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/480" alt="Bear 13">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/520" alt="Bear 14">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/340" alt="Bear 15">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/410" alt="Bear 16">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/390" alt="Bear 17">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/600" alt="Bear 18">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/360" alt="Bear 19">
+                </div>
+                <div class="gallery-item category-people hidden">
+                    <img src="https://placebear.com/400/370" alt="Bear 20">
                 </div>
             </div>
-        </div>
-    </section>
 
-    <!-- Pricing Section -->
-    <section id="pricing" class="py-20 px-4 drawing-bg">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-4">Pricing & Options</h2>
-            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">All portraits include free domestic shipping and a certificate of authenticity</p>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Pricing Tier 1 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="px-6 py-8 border-b border-gray-200">
-                        <h3 class="text-2xl font-bold text-center mb-2">Standard</h3>
-                        <p class="text-center text-gray-600 mb-6">1 pet, head & shoulders</p>
-                        <p class="text-4xl font-bold text-center text-amber-600 mb-4">$200</p>
-                        <p class="text-sm text-gray-500 text-center">8"x10" drawing area</p>
-                    </div>
-                    <div class="p-6">
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Digital proof for approval</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>3-4 week completion time</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Matted to 11"x14"</span>
-                            </li>
-                        </ul>
-                        <a href="#contact" class="mt-6 block w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-4 rounded transition duration-300">Order Now</a>
-                    </div>
-                </div>
-                
-                <!-- Pricing Tier 2 - Featured -->
-                <div class="bg-white rounded-lg shadow-xl overflow-hidden transform md:scale-105 relative">
-                    <div class="absolute top-0 right-0 bg-amber-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg">MOST POPULAR</div>
-                    <div class="px-6 py-8 border-b border-gray-200">
-                        <h3 class="text-2xl font-bold text-center mb-2">Deluxe</h3>
-                        <p class="text-center text-gray-600 mb-6">1 pet, full body</p>
-                        <p class="text-4xl font-bold text-center text-amber-600 mb-4">$350</p>
-                        <p class="text-sm text-gray-500 text-center">11"x14" drawing area</p>
-                    </div>
-                    <div class="p-6">
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Digital proof for approval</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>4-5 week completion time</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Matted to 16"x20"</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Basic background included</span>
-                            </li>
-                        </ul>
-                        <a href="#contact" class="mt-6 block w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-4 rounded transition duration-300">Order Now</a>
-                    </div>
-                </div>
-                
-                <!-- Pricing Tier 3 -->
-                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
-                    <div class="px-6 py-8 border-b border-gray-200">
-                        <h3 class="text-2xl font-bold text-center mb-2">Premium</h3>
-                        <p class="text-center text-gray-600 mb-6">2 pets, custom composition</p>
-                        <p class="text-4xl font-bold text-center text-amber-600 mb-4">$500+</p>
-                        <p class="text-sm text-gray-500 text-center">Custom sizing available</p>
-                    </div>
-                    <div class="p-6">
-                        <ul class="space-y-3">
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Digital proof for approval</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>5-7 week completion time</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Custom matting</span>
-                            </li>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
-                                <span>Detailed background included</span>
-                            </li>
-                        </ul>
-                        <a href="#contact" class="mt-6 block w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-4 rounded transition duration-300">Get a Quote</a>
-                    </div>
-                </div>
-            </div>
-            
             <div class="mt-12 bg-white rounded-lg shadow-md p-8 max-w-3xl mx-auto">
                 <h3 class="text-xl font-bold mb-4 text-center">Frequently Asked Questions</h3>
                 <div class="space-y-4">
@@ -633,6 +688,28 @@
                 }
             });
         });
+
+        // Gallery filter logic
+        function setGalleryCategory(category) {
+            document.querySelectorAll('.gallery-item').forEach(item => {
+                if (item.classList.contains('category-' + category)) {
+                    item.classList.remove('hidden');
+                } else {
+                    item.classList.add('hidden');
+                }
+            });
+            document.querySelectorAll('.gallery-filter-btn').forEach(btn => {
+                btn.classList.remove('bg-amber-600', 'text-white');
+                btn.classList.add('bg-white', 'text-amber-600');
+            });
+            document.getElementById('btn-' + category).classList.add('bg-amber-600', 'text-white');
+            document.getElementById('btn-' + category).classList.remove('bg-white', 'text-amber-600');
+        }
+        document.getElementById('btn-dogs').addEventListener('click', () => setGalleryCategory('dogs'));
+        document.getElementById('btn-cats').addEventListener('click', () => setGalleryCategory('cats'));
+        document.getElementById('btn-people').addEventListener('click', () => setGalleryCategory('people'));
+        // Default to Dogs
+        setGalleryCategory('dogs');
     </script>
 </body>
 </html>
