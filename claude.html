@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karen's Pet Portraits | San Francisco Portrait Artist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .gallery-item {
+            transition: all 0.3s ease;
+        }
+        
+        .gallery-item img {
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover img {
+            transform: scale(1.05);
+        }
+        
+        .gallery-item:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.2);
+        }
+        
+        .aspect-ratio-box {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 0.5rem;
+        }
+        
+        /* Responsive aspect ratios */
+        .aspect-square { padding-top: 100%; }
+        .aspect-portrait { padding-top: 133%; }
+        .aspect-landscape { padding-top: 75%; }
+        
+        .aspect-ratio-box img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+        
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?ixlib=rb-4.0.3');
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .drawing-bg {
+            background-color: #f9f5f0;
+        }
+        
+        .custom-shape-divider-bottom-1688386754 {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+            line-height: 0;
+            transform: rotate(180deg);
+        }
+        
+        .custom-shape-divider-bottom-1688386754 svg {
+            position: relative;
+            display: block;
+            width: calc(100% + 1.3px);
+            height: 150px;
+        }
+        
+        .custom-shape-divider-bottom-1688386754 .shape-fill {
+            fill: #f9f5f0;
+        }
+        
+        /* Lazy loading optimization */
+        .gallery-item img[data-src] {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .gallery-item img.loaded {
+            opacity: 1;
+        }
+        
+        /* Masonry-style grid for varied aspect ratios */
+        @media (min-width: 768px) {
+            .masonry-grid {
+                column-count: 2;
+                column-gap: 2rem;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-grid {
+                column-count: 3;
+            }
+        }
+        
+        @media (min-width: 1280px) {
+            .masonry-grid {
+                column-count: 4;
+            }
+        }
+        
+        .masonry-item {
+            break-inside: avoid;
+            margin-bottom: 2rem;
+            display: inline-block;
+            width: 100%;
+        }
+        
+        /* Loading spinner */
+        .loading-spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #d97706;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Optimized modal */
+        .modal {
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal img {
+            max-height: 70vh;
+            object-fit: contain;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="flex justify-between">
+                <div class="flex space-x-7">
+                    <div>
+                        <!-- Logo -->
+                        <a href="#" class="flex items-center py-4 px-2">
+                            <i class="fas fa-paw text-amber-600 text-2xl mr-2"></i>
+                            <span class="font-semibold text-gray-900 text-lg">Karen's Pet Portraits</span>
+                        </a>
+                    </div>
+                </div>
+                <!-- Primary Nav -->
+                <div class="hidden md:flex items-center space-x-1">
+                    <a href="#home" class="py-4 px-2 text-amber-600 border-b-4 border-amber-600 font-semibold">Home</a>
+                    <a href="#gallery" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Gallery</a>
+                    <a href="#about" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">About</a>
+                    <a href="#pricing" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Pricing</a>
+                    <a href="#contact" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Contact</a>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button class="outline-none mobile-menu-button">
+                        <svg class="w-6 h-6 text-gray-700" 
+                            fill="none"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden mobile-menu">
+            <ul>
+                <li><a href="#home" class="block text-sm px-2 py-4 text-white bg-amber-600 font-semibold">Home</a></li>
+                <li><a href="#gallery" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">Gallery</a></li>
+                <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">About</a></li>
+                <li><a href="#pricing" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">Pricing</a></li>
+                <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-bg h-screen flex items-center justify-center text-white relative">
+        <div class="text-center px-4">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">Custom Pet Portraits</h1>
+            <p class="text-xl md:text-2xl mb-8">San Francisco based artist specializing in graphite, colored pencil, and ballpoint pen</p>
+            <a href="#contact" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">Commission Yours Today</a>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0">
+            <div class="custom-shape-divider-bottom-1688386754">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                    <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="drawing-bg py-20 px-4">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">Portfolio Gallery</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-6">Browse my collection of pet portraits organized by category</p>
+            
+            <!-- Gallery Filter Buttons -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="gallery-filter bg-amber-600 text-white px-6 py-3 rounded-full font-medium" data-category="all">All (95)</button>
+                <button class="gallery-filter bg-gray-200 hover:bg-amber-600 hover:text-white px-6 py-3 rounded-full font-medium transition duration-300" data-category="dogs">Dogs (47)</button>
+                <button class="gallery-filter bg-gray-200 hover:bg-amber-600 hover:text-white px-6 py-3 rounded-full font-medium transition duration-300" data-category="cats">Cats (35)</button>
+                <button class="gallery-filter bg-gray-200 hover:bg-amber-600 hover:text-white px-6 py-3 rounded-full font-medium transition duration-300" data-category="people">People (13)</button>
+            </div>
+            
+            <!-- Loading indicator -->
+            <div id="loading-indicator" class="loading-spinner" style="display: none;"></div>
+            
+            <!-- Gallery Container -->
+            <div id="gallery-container" class="masonry-grid">
+                <!-- Gallery items will be dynamically inserted here -->
+            </div>
+            
+            <!-- Load More Button -->
+            <div class="text-center mt-12">
+                <button id="load-more-btn" class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full transition duration-300">
+                    Load More Photos
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 bg-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0 md:pr-10">
+                    <img src="https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Artist working on portrait" class="rounded-lg shadow-xl w-full">
+                </div>
+                <div class="md:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">About Karen</h2>
+                    <p class="text-gray-600 mb-4">Hi, I'm Karen Shrira Steinitz, a San Francisco-based artist specializing in graphite, colored pencil, and ballpoint pen portraits. With years of experience, I capture the unique personalities and special bond between pets and their owners through meticulously detailed artwork.</p>
+                    <p class="text-gray-600 mb-4">Each portrait takes approximately 20-40 hours to complete, depending on size and complexity. I work exclusively with lightfast, professional grade colored pencils that resist fading, ensuring your portrait remains vibrant for generations.</p>
+                    <p class="text-gray-600 mb-6">My process begins with studying your pet's photos to understand their unique characteristics. Then I layer colors gradually, building up texture and depth to create a lifelike representation full of personality.</p>
+                    <div class="flex space-x-4">
+                        <div class="bg-amber-50 p-4 rounded-lg text-center flex-1">
+                            <i class="fas fa-award text-amber-600 text-3xl mb-2"></i>
+                            <h3 class="font-bold">Award Winning</h3>
+                            <p class="text-sm text-gray-600">5 time Pet Art Show winner</p>
+                        </div>
+                        <div class="bg-amber-50 p-4 rounded-lg text-center flex-1">
+                            <i class="fas fa-pencil-alt text-amber-600 text-3xl mb-2"></i>
+                            <h3 class="font-bold">500+ Portraits</h3>
+                            <p class="text-sm text-gray-600">Completed with love</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 px-4 drawing-bg">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">Pricing & Options</h2>
+            <p class="text-center text-gray-600 max-w-2xl mx-auto mb-12">All portraits include free domestic shipping and a certificate of authenticity</p>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Pricing Tier 1 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-8 border-b border-gray-200">
+                        <h3 class="text-2xl font-bold text-center mb-2">Standard</h3>
+                        <p class="text-center text-gray-600 mb-6">1 pet, head & shoulders</p>
+                        <p class="text-4xl font-bold text-center text-amber-600 mb-4">$200</p>
+                        <p class="text-sm text-gray-500 text-center">8"x10" drawing area</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Digital proof for approval</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>3-4 week completion time</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Matted to 11"x14"</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="mt-6 block w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-4 rounded transition duration-300">Order Now</a>
+                    </div>
+                </div>
+                
+                <!-- Pricing Tier 2 - Featured -->
+                <div class="bg-white rounded-lg shadow-xl overflow-hidden transform md:scale-105 relative">
+                    <div class="absolute top-0 right-0 bg-amber-600 text-white px-4 py-1 text-xs font-bold rounded-bl-lg">MOST POPULAR</div>
+                    <div class="px-6 py-8 border-b border-gray-200">
+                        <h3 class="text-2xl font-bold text-center mb-2">Deluxe</h3>
+                        <p class="text-center text-gray-600 mb-6">1 pet, full body</p>
+                        <p class="text-4xl font-bold text-center text-amber-600 mb-4">$350</p>
+                        <p class="text-sm text-gray-500 text-center">11"x14" drawing area</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Digital proof for approval</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>4-5 week completion time</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Matted to 16"x20"</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Basic background included</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="mt-6 block w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-4 rounded transition duration-300">Order Now</a>
+                    </div>
+                </div>
+                
+                <!-- Pricing Tier 3 -->
+                <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div class="px-6 py-8 border-b border-gray-200">
+                        <h3 class="text-2xl font-bold text-center mb-2">Premium</h3>
+                        <p class="text-center text-gray-600 mb-6">2 pets, custom composition</p>
+                        <p class="text-4xl font-bold text-center text-amber-600 mb-4">$500+</p>
+                        <p class="text-sm text-gray-500 text-center">Custom sizing available</p>
+                    </div>
+                    <div class="p-6">
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Digital proof for approval</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>5-7 week completion time</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Custom matting</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                                <span>Detailed background included</span>
+                            </li>
+                        </ul>
+                        <a href="#contact" class="mt-6 block w-full bg-amber-600 hover:bg-amber-700 text-white text-center font-bold py-3 px-4 rounded transition duration-300">Get a Quote</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 bg-white">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-2">Ready to Commission Your Portrait?</h2>
+            <p class="text-center text-gray-600 mb-12">Fill out the form below and I'll get back to you within 1-2 business days to discuss your project</p>
+            
+            <form class="bg-amber-50 rounded-lg shadow-md p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
+                        <input type="text" id="name" name="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="John Smith" required>
+                    </div>
+                    <div>
+                        <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
+                        <input type="email" id="email" name="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="john@example.com" required>
+                    </div>
+                    <div>
+                        <label for="pet-name" class="block text-gray-700 font-medium mb-2">Pet's Name</label>
+                        <input type="text" id="pet-name" name="pet-name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Buddy" required>
+                    </div>
+                    <div>
+                        <label for="pet-type" class="block text-gray-700 font-medium mb-2">Pet Type</label>
+                        <select id="pet-type" name="pet-type" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" required>
+                            <option value="" disabled selected>Select pet type</option>
+                            <option value="dog">Dog</option>
+                            <option value="cat">Cat</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="size" class="block text-gray-700 font-medium mb-2">Portrait Size</label>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-amber-600" name="size" value="8x10" checked>
+                                <span class="ml-2">Standard (8"x10") - $200</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-amber-600" name="size" value="11x14">
+                                <span class="ml-2">Deluxe (11"x14") - $350</span>
+                            </label>
+                            <label class="inline-flex items-center">
+                                <input type="radio" class="form-radio text-amber-600" name="size" value="custom">
+                                <span class="ml-2">Custom - Get a quote</span>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="md:col-span-2">
+                        <label for="message" class="block text-gray-700 font-medium mb-2">Tell Me About Your Pet</label>
+                        <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500" placeholder="Describe your pet's personality, any special features, and what you'd like in the portrait..."></textarea>
+                    </div>
+                    <div class="md:col-span-2">
+                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">Submit Commission Request</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <i class="fas fa-paw text-amber-600 mr-2"></i>
+                        <span>Karen's Pet Portraits</span>
+                    </h3>
+                    <p class="text-gray-400">Creating timeless pet portraits that celebrate your beloved companion's unique spirit.</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-amber-600 transition duration-300">Home</a></li>
+                        <li><a href="#gallery" class="text-gray-400 hover:text-amber-600 transition duration-300">Gallery</a></li>
+                        <li><a href="#pricing" class="text-gray-400 hover:text-amber-600 transition duration-300">Pricing</a></li>
+                        <li><a href="#contact" class="text-gray-400 hover:text-amber-600 transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Follow Me</h4>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i class="fab fa-facebook"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i class="fab fa-pinterest"></i></a>
+                        <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i class="fab fa-etsy"></i></a>
+                    </div>
+                    <h4 class="font-bold mt-6 mb-4">Business Hours</h4>
+                    <p class="text-gray-400">Monday-Friday: 9am-5pm EST</p>
+                    <p class="text-gray-400">Weekends: Closed</p>
+                </div>
+                <div>
+                    <h4 class="font-bold mb-4">Newsletter</h4>
+                    <p class="text-gray-400 mb-4">Subscribe for exclusive offers, early access to commission slots, and pet art tips.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 w-full rounded-l-lg focus:outline-none text-gray-900">
+                        <button type="submit" class="bg-amber-600 hover:bg-amber-700 px-4 rounded-r-lg transition duration-300"><i class="fas fa-paper-plane"></i></button>
+                    </form>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2023 Karen's Pet Portraits. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div id="photo-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center p-4 hidden modal">
+        <div class="bg-white rounded-lg max-w-4xl w-full max-h-screen overflow-auto">
+            <div class="p-6">
+                <div class="flex justify-between items-start mb-4">
+                    <div>
+                        <h3 id="modal-title" class="text-2xl font-bold"></h3>
+                        <p id="modal-subtitle" class="text-amber-600 font-semibold"></p>
+                    </div>
+                    <button id="modal-close" class="text-gray-500 hover:text-gray-700">
+                        <i class="fas fa-times text-2xl"></i>
+                    </button>
+                </div>
+                
+                <img id="modal-image" src="" alt="" class="w-full rounded-lg mb-4">
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                    <div class="bg-amber-50 p-4 rounded-lg">
+                        <h4 class="font-bold mb-2">Details</h4>
+                        <ul id="modal-details" class="text-gray-600 space-y-2">
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-amber-50 p-4 rounded-lg">
+                        <h4 class="font-bold mb-2">About This Portrait</h4>
+                        <p id="modal-description" class="text-gray-600"></p>
+                    </div>
+                </div>
+                
+                <div class="flex justify-center">
