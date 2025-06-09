@@ -23,8 +23,15 @@ function renderGallery(category) {
   masonryGallery.innerHTML = '';
   allPhotos.filter(photo => photo.category === category).forEach(photo => {
     const div = document.createElement('div');
-    div.className = 'gallery-item';
-    div.innerHTML = `<img src="${photo.path}" alt="${photo.file}">`;
+    div.className = 'gallery-item relative';
+    div.innerHTML = `
+      <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg">
+      <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
+        <a href="${photo.path}" download class="text-white hover:text-amber-400">
+          <i class="fas fa-download text-3xl"></i>
+        </a>
+      </div>
+    `;
     masonryGallery.appendChild(div);
   });
   // Update button styles
