@@ -9,11 +9,16 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const imagePath = `images/happy-clients/client${i}.jpg`;
         item.innerHTML = `
-            <img src="${imagePath}" alt="Client Portrait ${i}" class="w-full h-auto rounded-lg shadow-lg">
+            <img src="${imagePath}" alt="Client Portrait ${i}" class="w-full h-auto rounded-lg shadow-lg gallery-img">
             <div class="overlay absolute inset-0 flex items-center justify-center">
-                <a href="${imagePath}" download class="download-icon hover:text-amber-400">
+                <div class="flex space-x-4">
+                  <a href="${imagePath}" download class="download-icon hover:text-amber-400" title="Download">
                     <i class="fas fa-download"></i>
-                </a>
+                  </a>
+                  <button class="expand-icon" data-img="${imagePath}" title="Expand" style="background:transparent;border:none;outline:none;cursor:pointer;">
+                    <img src="images/icons/expand_icon.png" alt="Expand" class="w-8 h-8">
+                  </button>
+                </div>
             </div>
         `;
         
@@ -43,4 +48,38 @@ document.addEventListener('DOMContentLoaded', () => {
         item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
         observer.observe(item);
     });
+    
+    // Add expand modal logic
+    document.querySelectorAll('.expand-icon').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            e.preventDefault();
+            const imgSrc = this.getAttribute('data-img');
+            showExpandModal(imgSrc);
+        });
+    });
 });
+
+// Modal for expanded image
+function showExpandModal(imgSrc) {
+    let modal = document.getElementById('expand-modal');
+    if (!modal) {
+        modal = document.createElement('div');
+        modal.id = 'expand-modal';
+        modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80';
+        modal.innerHTML = `
+            <div class="relative max-w-4xl w-full flex flex-col items-center">
+                <button class="absolute top-2 right-2 text-white text-3xl font-bold close-expand-modal" title="Close">&times;</button>
+                <img src="${imgSrc}" alt="Expanded" class="max-h-[80vh] w-auto rounded-lg shadow-2xl border-4 border-white">
+            </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('.close-expand-modal').onclick = () => modal.remove();
+        modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+    } else {
+        modal.querySelector('img').src = imgSrc;
+        modal.classList.remove('hidden');
+    }
+    document.body.style.overflow = 'hidden';
+    modal.ontransitionend = () => { document.body.style.overflow = ''; };
+}

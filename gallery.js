@@ -25,11 +25,16 @@ function renderGallery(category) {
     const div = document.createElement('div');
     div.className = 'gallery-item relative';
     div.innerHTML = `
-      <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg">
+      <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
-        <a href="${photo.path}" download class="text-white hover:text-amber-400">
-          <i class="fas fa-download text-3xl"></i>
-        </a>
+        <div class="flex space-x-4">
+          <a href="${photo.path}" download class="text-white hover:text-amber-400 download-icon" title="Download">
+            <i class="fas fa-download text-3xl"></i>
+          </a>
+          <button class="expand-icon" data-img="${photo.path}" title="Expand" style="background:transparent;border:none;outline:none;cursor:pointer;">
+            <img src="images/icons/expand_icon.png" alt="Expand" class="w-8 h-8">
+          </button>
+        </div>
       </div>
     `;
     masonryGallery.appendChild(div);
@@ -47,6 +52,40 @@ function renderGallery(category) {
       }
     }
   });
+
+  // Add expand modal logic
+  document.querySelectorAll('.expand-icon').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      const imgSrc = this.getAttribute('data-img');
+      showExpandModal(imgSrc);
+    });
+  });
+}
+
+// Modal for expanded image
+function showExpandModal(imgSrc) {
+  let modal = document.getElementById('expand-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'expand-modal';
+    modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80';
+    modal.innerHTML = `
+      <div class="relative max-w-4xl w-full flex flex-col items-center">
+        <button class="absolute top-2 right-2 text-white text-3xl font-bold close-expand-modal" title="Close">&times;</button>
+        <img src="${imgSrc}" alt="Expanded" class="max-h-[80vh] w-auto rounded-lg shadow-2xl border-4 border-white">
+      </div>
+    `;
+    document.body.appendChild(modal);
+    modal.querySelector('.close-expand-modal').onclick = () => modal.remove();
+    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
+  } else {
+    modal.querySelector('img').src = imgSrc;
+    modal.classList.remove('hidden');
+  }
+  document.body.style.overflow = 'hidden';
+  modal.ontransitionend = () => { document.body.style.overflow = ''; };
 }
 
 fetch('photos_list.txt')
