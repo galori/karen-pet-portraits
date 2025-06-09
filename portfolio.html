@@ -165,11 +165,11 @@
                 </div>
                 <!-- Primary Nav -->
                 <div class="hidden md:flex items-center space-x-1">
-                    <a href="#home" class="py-4 px-2 text-amber-600 border-b-4 border-amber-600 font-semibold">Home</a>
-                    <a href="#gallery" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Gallery</a>
-                    <a href="#reference" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Reference Photo Guide</a>
-                    <a href="#happyclients" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Happy Clients</a>
-                    <a href="#contact" class="py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300">Contact</a>
+                    <a href="#home" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300" data-section="home">Home</a>
+                    <a href="#gallery" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300" data-section="gallery">Gallery</a>
+                    <a href="#reference" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300" data-section="reference">Reference Photo Guide</a>
+                    <a href="#happyclients" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300" data-section="happyclients">Happy Clients</a>
+                    <a href="#contact" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300" data-section="contact">Contact</a>
                 </div>
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center">
@@ -620,5 +620,48 @@
     <script src="portfolio.js"></script>
     <script src="gallery.js"></script>
     <script src="happy-clients.js"></script>
+    <script>
+    // Dynamic nav highlighting
+    const navLinks = document.querySelectorAll('.nav-link');
+    const sectionIds = Array.from(navLinks).map(link => link.getAttribute('data-section'));
+    const sections = sectionIds.map(id => document.getElementById(id));
+
+    function setActiveNav(sectionId) {
+        navLinks.forEach(link => {
+            if (link.getAttribute('data-section') === sectionId) {
+                link.classList.add('text-amber-600', 'border-b-4', 'border-amber-600', 'font-semibold');
+                link.classList.remove('text-gray-500');
+            } else {
+                link.classList.remove('text-amber-600', 'border-b-4', 'border-amber-600', 'font-semibold');
+                link.classList.add('text-gray-500');
+            }
+        });
+    }
+
+    // On click, set active
+    navLinks.forEach(link => {
+        link.addEventListener('click', function() {
+            setActiveNav(this.getAttribute('data-section'));
+        });
+    });
+
+    // On scroll, set active based on section in view
+    window.addEventListener('scroll', () => {
+        let current = sectionIds[0];
+        for (let i = 0; i < sections.length; i++) {
+            const section = sections[i];
+            if (section) {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 80) {
+                    current = sectionIds[i];
+                }
+            }
+        }
+        setActiveNav(current);
+    });
+
+    // Set initial active nav
+    setActiveNav(sectionIds[0]);
+    </script>
 </body>
 </html>
