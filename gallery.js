@@ -52,40 +52,10 @@ function renderGallery(category) {
       }
     }
   });
-
-  // Add expand modal logic
-  document.querySelectorAll('.expand-icon').forEach(btn => {
-    btn.addEventListener('click', function(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      const imgSrc = this.getAttribute('data-img');
-      showExpandModal(imgSrc);
-    });
-  });
-}
-
-// Modal for expanded image
-function showExpandModal(imgSrc) {
-  let modal = document.getElementById('expand-modal');
-  if (!modal) {
-    modal = document.createElement('div');
-    modal.id = 'expand-modal';
-    modal.className = 'fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-80';
-    modal.innerHTML = `
-      <div class="relative max-w-4xl w-full flex flex-col items-center">
-        <button class="absolute top-2 right-2 text-white text-3xl font-bold close-expand-modal" title="Close">&times;</button>
-        <img src="${imgSrc}" alt="Expanded" class="max-h-[80vh] w-auto rounded-lg shadow-2xl border-4 border-white">
-      </div>
-    `;
-    document.body.appendChild(modal);
-    modal.querySelector('.close-expand-modal').onclick = () => modal.remove();
-    modal.onclick = (e) => { if (e.target === modal) modal.remove(); };
-  } else {
-    modal.querySelector('img').src = imgSrc;
-    modal.classList.remove('hidden');
+  // Use shared modal logic for expand icons
+  if (window.SharedModal) {
+    SharedModal.addExpandListeners('.expand-icon');
   }
-  document.body.style.overflow = 'hidden';
-  modal.ontransitionend = () => { document.body.style.overflow = ''; };
 }
 
 fetch('photos_list.txt')
