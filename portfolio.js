@@ -18,4 +18,22 @@ document.addEventListener('DOMContentLoaded', function() {
             this.closest('.modal').classList.add('hidden');
         });
     });
+
+    // Smooth scrolling for anchor links
+    const mobileMenu = document.querySelector('.mobile-menu');
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            // Only handle if href is not just '#'
+            if (this.getAttribute('href') === '#') return;
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                e.preventDefault();
+                target.scrollIntoView({ behavior: 'smooth' });
+                // Close mobile menu if open
+                if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            }
+        });
+    });
 });
