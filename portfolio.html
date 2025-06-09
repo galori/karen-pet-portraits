@@ -70,6 +70,80 @@
             border-radius: 0.75rem;
             box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
         }
+        /* Add to existing styles */
+        .masonry-gallery {
+            column-count: 1;
+            column-gap: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .masonry-gallery {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-gallery {
+                column-count: 3;
+            }
+        }
+        
+        .gallery-item {
+            break-inside: avoid;
+        }
+        
+        .overlay {
+            opacity: 0;
+        }
+        
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        
+        /* Masonry layout styles */
+        .masonry-gallery {
+            column-count: 1;
+            column-gap: 1rem;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .masonry-gallery {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-gallery {
+                column-count: 3;
+            }
+        }
+        
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+        
+        .overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 0.5rem;
+        }
+        
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        
+        .download-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .download-icon {
+            transform: translateY(2px);
+        }
     </style>
 </head>
 <body class="font-sans antialiased">
@@ -82,7 +156,7 @@
                         <!-- Logo -->
                         <a href="#" class="flex items-center py-4 px-2">
                             <i class="fas fa-paw text-amber-600 text-2xl mr-2"></i>
-                            <span class="font-semibold text-gray-900 text-lg">Pet Portraits</span>
+                            <span class="font-semibold text-gray-900 text-lg">Pet Portraits by Karen</span>
                         </a>
                     </div>
                 </div>
@@ -200,11 +274,11 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                                        <img src="images/perfect-image.jpg" alt="Ideal Head Shot 1" class="rounded-lg object-cover w-full max-w-xs mb-2">
+                                        <img src="images/reference-photos/perfect-image.jpg" alt="Ideal Head Shot 1" class="rounded-lg object-cover w-full max-w-xs mb-2">
                                         <span class="text-xs text-gray-600">Ideal head shot</span>
                                     </div>
                                     <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                                        <img src="images/hammer.jpg" alt="Ideal Head Shot 2" class="rounded-lg object-cover w-full max-w-xs mb-2">
+                                        <img src="images/reference-photos/hammer.jpg" alt="Ideal Head Shot 2" class="rounded-lg object-cover w-full max-w-xs mb-2">
                                         <span class="text-xs text-gray-600">Ideal head shot</span>
                                     </div>
                                 </div>
@@ -220,11 +294,11 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                                        <img src="images/carrie-kitty.jpg" alt="Blurry Cat" class="rounded-lg object-cover w-full max-w-xs mb-2">
+                                        <img src="images/reference-photos/carrie-kitty.jpg" alt="Blurry Cat" class="rounded-lg object-cover w-full max-w-xs mb-2">
                                         <span class="text-xs text-gray-600">Blurry/poor lighting</span>
                                     </div>
                                     <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                                        <img src="images/cocker-3.jpg" alt="Blurry Dog" class="rounded-lg object-cover w-full max-w-xs mb-2">
+                                        <img src="images/reference-photos/cocker-3.jpg" alt="Blurry Dog" class="rounded-lg object-cover w-full max-w-xs mb-2">
                                         <span class="text-xs text-gray-600">Blurry/poor lighting</span>
                                     </div>
                                 </div>
@@ -240,11 +314,11 @@
                                 </div>
                                 <div class="grid grid-cols-2 gap-4 mb-4">
                                     <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                                        <img src="images/cocker-edited.jpg" alt="Candid Dog" class="rounded-lg object-cover w-full max-w-xs mb-2">
+                                        <img src="images/reference-photos/cocker-edited.jpg" alt="Candid Dog" class="rounded-lg object-cover w-full max-w-xs mb-2">
                                         <span class="text-xs text-gray-600">Candid snapshot</span>
                                     </div>
                                     <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center">
-                                        <img src="images/avery-kitty.jpg" alt="Awkward Angle Cat" class="rounded-lg object-cover w-full max-w-xs mb-2">
+                                        <img src="images/reference-photos/avery-kitty.jpg" alt="Awkward Angle Cat" class="rounded-lg object-cover w-full max-w-xs mb-2">
                                         <span class="text-xs text-gray-600">Awkward angle</span>
                                     </div>
                                 </div>
@@ -264,72 +338,58 @@
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl font-bold text-center mb-12">Happy Clients</h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <!-- Testimonial 1 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-amber-500 mr-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"Sarah captured my golden retriever's spirit perfectly. The portrait looks exactly like him down to the twinkle in his eye. It's the perfect way to remember my best friend."</p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/32.jpg" alt="Jennifer S." class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <p class="font-bold">Jennifer S.</p>
-                            <p class="text-sm text-gray-500">Portland, OR</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 2 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-amber-500 mr-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"The portrait of my two cats was worth every penny. Sarah paid attention to every detail - from their different fur patterns to their unique personalities. The quality is incredible!"</p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/men/45.jpg" alt="Michael T." class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <p class="font-bold">Michael T.</p>
-                            <p class="text-sm text-gray-500">Denver, CO</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Testimonial 3 -->
-                <div class="bg-white p-8 rounded-lg shadow-md">
-                    <div class="flex items-center mb-4">
-                        <div class="text-amber-500 mr-2">
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star"></i>
-                            <i class="fas fa-star-half-alt"></i>
-                        </div>
-                    </div>
-                    <p class="text-gray-600 mb-6">"I commissioned a portrait of my late bulldog as a gift for my husband. It was so lifelike it brought tears to his eyes. Sarah's talent is truly remarkable."</p>
-                    <div class="flex items-center">
-                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Amanda K." class="w-12 h-12 rounded-full mr-4 object-cover">
-                        <div>
-                            <p class="font-bold">Amanda K.</p>
-                            <p class="text-sm text-gray-500">Chicago, IL</p>
-                        </div>
-                    </div>
-                </div>
+            <div class="masonry-gallery" id="happy-clients-gallery">
+                <!-- Gallery items will be populated by JavaScript -->
             </div>
         </div>
     </section>
+    
+    <style>
+        /* Masonry layout styles */
+        .masonry-gallery {
+            column-count: 1;
+            column-gap: 1rem;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .masonry-gallery {
+                column-count: 2;
+            }
+        }
+        
+        @media (min-width: 1024px) {
+            .masonry-gallery {
+                column-count: 3;
+            }
+        }
+        
+        .gallery-item {
+            break-inside: avoid;
+            margin-bottom: 1rem;
+        }
+        
+        .overlay {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 0.5rem;
+        }
+        
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        
+        .download-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .gallery-item:hover .download-icon {
+            transform: translateY(2px);
+        }
+    </style>
 
     <!-- Contact Section -->
     <section id="contact" class="py-20 px-4 bg-white">
@@ -514,5 +574,6 @@
 
     <script src="portfolio.js"></script>
     <script src="gallery.js"></script>
+    <script src="happy-clients.js"></script>
 </body>
 </html>
