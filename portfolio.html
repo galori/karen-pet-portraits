@@ -7,208 +7,7 @@
   <title>Karen Shrira Steinitz | Pet Portrait Artist</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    html {
-      scroll-behavior: smooth;
-    }
-
-    .gallery-item {
-      transition: all 0.3s ease;
-    }
-
-    .gallery-item:hover {
-      transform: scale(1.03);
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-
-    .hero-bg {
-      background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('https://images.unsplash.com/photo-1533743983669-94fa5c4338ec?ixlib=rb-4.0.3');
-      background-size: cover;
-      background-position: center;
-    }
-
-    .drawing-bg {
-      background-color: #f9f5f0;
-    }
-
-    .custom-shape-divider-bottom-1688386754 {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      overflow: hidden;
-      line-height: 0;
-      transform: rotate(180deg);
-    }
-
-    .custom-shape-divider-bottom-1688386754 svg {
-      position: relative;
-      display: block;
-      width: calc(100% + 1.3px);
-      height: 150px;
-    }
-
-    .custom-shape-divider-bottom-1688386754 .shape-fill {
-      fill: #f9f5f0;
-    }
-
-    /* Masonry columns for responsive breakpoints */
-    #masonry-gallery {
-      column-count: 1;
-      column-gap: 1.5rem;
-    }
-
-    @media (min-width: 640px) {
-      #masonry-gallery {
-        column-count: 2 !important;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      #masonry-gallery {
-        column-count: 3 !important;
-      }
-    }
-
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 1.5rem;
-      background: none;
-      box-shadow: none;
-      border-radius: 0;
-      padding: 0;
-    }
-
-    .gallery-item img {
-      display: block;
-      width: 100%;
-      height: auto;
-      border-radius: 0.75rem;
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-    }
-
-    /* Add to existing styles */
-    .masonry-gallery {
-      column-count: 1;
-      column-gap: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .masonry-gallery {
-        column-count: 2;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .masonry-gallery {
-        column-count: 3;
-      }
-    }
-
-    .gallery-item {
-      break-inside: avoid;
-    }
-
-    .overlay {
-      opacity: 0;
-    }
-
-    .gallery-item:hover .overlay {
-      opacity: 1;
-    }
-
-    /* Masonry layout styles */
-    .masonry-gallery {
-      column-count: 1;
-      column-gap: 1rem;
-      padding: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .masonry-gallery {
-        column-count: 2;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .masonry-gallery {
-        column-count: 3;
-      }
-    }
-
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 1rem;
-    }
-
-    .overlay {
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 0.5rem;
-    }
-
-    .gallery-item:hover .overlay {
-      opacity: 1;
-    }
-
-    .download-icon {
-      color: white;
-      font-size: 1.5rem;
-      transition: transform 0.3s ease;
-    }
-
-    .gallery-item:hover .download-icon {
-      transform: translateY(2px);
-    }
-
-    .expand-icon img {
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
-      transition: transform 0.2s;
-    }
-
-    .expand-icon:hover img {
-      transform: scale(1.15);
-      filter: drop-shadow(0 4px 12px rgba(255, 193, 7, 0.5));
-    }
-
-    #expand-modal {
-      animation: fadeIn 0.2s;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .expand-icon img,
-    .download-icon i,
-    .download-icon svg {
-      width: 2rem;
-      height: 2rem;
-      max-width: 2rem;
-      max-height: 2rem;
-      min-width: 2rem;
-      min-height: 2rem;
-      display: inline-block;
-      vertical-align: middle;
-      border-radius: 0;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
-      transition: transform 0.2s, filter 0.2s;
-    }
-
-    .expand-icon:hover img,
-    .download-icon:hover i,
-    .download-icon:hover svg {
-      transform: scale(1.15);
-      filter: drop-shadow(0 4px 12px rgba(255, 193, 7, 0.5));
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
 </head>
 
 <body class="font-sans antialiased">
@@ -228,15 +27,15 @@
         </div>
         <!-- Primary Nav -->
         <div class="hidden md:flex items-center space-x-1">
-          <a href="#home" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300"
+          <a href="#home" class="nav-link py-4 px-2 text-gray-500 hover:text-green-600 transition duration-300"
             data-section="home">Home</a>
-          <a href="#gallery" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300"
+          <a href="#gallery" class="nav-link py-4 px-2 text-gray-500 hover:text-green-600 transition duration-300"
             data-section="gallery">Gallery</a>
-          <a href="#reference" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300"
+          <a href="#reference" class="nav-link py-4 px-2 text-gray-500 hover:text-green-600 transition duration-300"
             data-section="reference">Reference Photo Guide</a>
-          <a href="#happyclients" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300"
+          <a href="#happyclients" class="nav-link py-4 px-2 text-gray-500 hover:text-green-600 transition duration-300"
             data-section="happyclients">Happy Clients</a>
-          <a href="#contact" class="nav-link py-4 px-2 text-gray-500 hover:text-amber-600 transition duration-300"
+          <a href="#contact" class="nav-link py-4 px-2 text-gray-500 hover:text-green-600 transition duration-300"
             data-section="contact">Contact</a>
         </div>
         <!-- Mobile menu button -->
@@ -253,13 +52,13 @@
     <!-- Mobile Menu -->
     <div class="hidden mobile-menu">
       <ul>
-        <li><a href="#home" class="block text-sm px-2 py-4 text-white bg-amber-600 font-semibold">Home</a></li>
-        <li><a href="#gallery" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">Gallery</a>
+        <li><a href="#home" class="block text-sm px-2 py-4 text-white bg-green-600 font-semibold">Home</a></li>
+        <li><a href="#gallery" class="block text-sm px-2 py-4 hover:bg-green-600 transition duration-300">Gallery</a>
         </li>
-        <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">About</a></li>
-        <li><a href="#pricing" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">Pricing</a>
+        <li><a href="#about" class="block text-sm px-2 py-4 hover:bg-green-600 transition duration-300">About</a></li>
+        <li><a href="#pricing" class="block text-sm px-2 py-4 hover:bg-green-600 transition duration-300">Pricing</a>
         </li>
-        <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-amber-600 transition duration-300">Contact</a>
+        <li><a href="#contact" class="block text-sm px-2 py-4 hover:bg-green-600 transition duration-300">Contact</a>
         </li>
       </ul>
     </div>
@@ -272,7 +71,7 @@
       <p class="text-xl md:text-2xl mb-8">Exquisite colored pencil drawings that capture your pet's unique personality
       </p>
       <a href="#contact"
-        class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">Commission
+        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">Commission
         Yours Today</a>
       <!-- Instagram Link -->
       <div class="flex flex-col items-center justify-center mt-10">
@@ -308,13 +107,13 @@
       <!-- Gallery Category Buttons -->
       <div class="flex justify-center mb-8 space-x-4">
         <button id="btn-cats"
-          class="gallery-filter-btn bg-amber-600 text-white font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Cats</button>
+          class="gallery-filter-btn bg-green-600 text-white font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Cats</button>
         <button id="btn-dogs"
-          class="gallery-filter-btn bg-white text-amber-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Dogs</button>
+          class="gallery-filter-btn bg-white text-green-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Dogs</button>
         <button id="btn-graphite"
-          class="gallery-filter-btn bg-white text-amber-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Graphite</button>
+          class="gallery-filter-btn bg-white text-green-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Graphite</button>
         <button id="btn-ink"
-          class="gallery-filter-btn bg-white text-amber-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Ink
+          class="gallery-filter-btn bg-white text-green-600 font-bold py-2 px-6 rounded-full shadow transition duration-300 focus:outline-none">Ink
           & Pen</button>
       </div>
 
@@ -328,29 +127,29 @@
           <div class="flex flex-col md:flex-row gap-8">
             <div class="md:w-1/2">
               <h3 class="text-2xl font-bold mb-4 flex items-center"><i
-                  class="fas fa-paint-brush mr-2 text-amber-600"></i>Portrait Details</h3>
+                  class="fas fa-paint-brush mr-2 text-green-600"></i>Portrait Details</h3>
               <ul class="space-y-4">
                 <li class="flex items-start">
-                  <i class="fas fa-paint-brush mt-1 mr-3 text-amber-600"></i>
+                  <i class="fas fa-paint-brush mt-1 mr-3 text-green-600"></i>
                   <div>
                     <span class="font-bold">Medium:</span> Colored pencil on high-quality archival paper
                   </div>
                 </li>
                 <li class="flex items-start">
-                  <i class="fas fa-ruler-combined mt-1 mr-3 text-amber-600"></i>
+                  <i class="fas fa-ruler-combined mt-1 mr-3 text-green-600"></i>
                   <div>
                     <span class="font-bold">Size:</span> 9" x 12" (one pet) - $350.00 plus shipping
                   </div>
                 </li>
                 <li class="flex items-start">
-                  <i class="fas fa-clock mt-1 mr-3 text-amber-600"></i>
+                  <i class="fas fa-clock mt-1 mr-3 text-green-600"></i>
                   <div>
                     <span class="font-bold">Time:</span> Each portrait takes 12-15 hours to complete with a turnaround
                     time of 4-6 weeks
                   </div>
                 </li>
                 <li class="flex items-start">
-                  <i class="fas fa-image mt-1 mr-3 text-amber-600"></i>
+                  <i class="fas fa-image mt-1 mr-3 text-green-600"></i>
                   <div>
                     <span class="font-bold">Reference Photo:</span> I work directly from a reference photo - the quality
                     of your image is crucial for the best results
@@ -360,12 +159,12 @@
             </div>
             <div class="md:w-1/2">
               <h3 class="text-2xl font-bold mb-4 flex items-center"><i
-                  class="fas fa-camera mr-2 text-amber-600"></i>Reference Photo Guide</h3>
+                  class="fas fa-camera mr-2 text-green-600"></i>Reference Photo Guide</h3>
               <div class="space-y-6">
                 <div>
                   <h4 class="font-bold text-lg mb-2">Quality Matters</h4>
-                  <p class="mb-2">The quality of your reference photo is vital to helping me capture your pet on paper. <span class="font-semibold text-amber-700">While candid or sentimental photos are meaningful, a good portrait must have spot-on details. Please ensure your photo is clear and well-lit so I can capture your pet's true personality.</span></p>
-                  <p class="mb-2 italic text-gray-600">Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. <span class="font-semibold text-amber-700">Have fun with the photos!</span></p>
+                  <p class="mb-2">The quality of your reference photo is vital to helping me capture your pet on paper. <span class="font-semibold text-green-700">While candid or sentimental photos are meaningful, a good portrait must have spot-on details. Please ensure your photo is clear and well-lit so I can capture your pet's true personality.</span></p>
+                  <p class="mb-2 italic text-gray-600">Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. <span class="font-semibold text-green-700">Have fun with the photos!</span></p>
                 </div>
                 <div class="grid grid-cols-2 gap-4 mb-4">
                   <div class="bg-white rounded-lg shadow p-2 flex flex-col items-center relative">
@@ -375,7 +174,7 @@
                       <div
                         class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
                         <a href="images/reference-photos/perfect-image.jpg" download
-                          class="text-white hover:text-amber-400">
+                          class="text-white hover:text-green-400">
                           <i class="fas fa-download text-3xl"></i>
                         </a>
                       </div>
@@ -388,7 +187,7 @@
                         class="rounded-lg object-cover w-full max-w-xs mb-2">
                       <div
                         class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
-                        <a href="images/reference-photos/hammer.jpg" download class="text-white hover:text-amber-400">
+                        <a href="images/reference-photos/hammer.jpg" download class="text-white hover:text-green-400">
                           <i class="fas fa-download text-3xl"></i>
                         </a>
                       </div>
@@ -396,8 +195,8 @@
                     <span class="text-xs text-gray-600">Ideal head shot</span>
                   </div>
                 </div>
-                <div class="p-4 rounded-lg bg-amber-50">
-                  <h4 class="font-bold mb-2 text-amber-700">✓ Ideal Photos Have:</h4>
+                <div class="p-4 rounded-lg bg-green-50">
+                  <h4 class="font-bold mb-2 text-green-700">✓ Ideal Photos Have:</h4>
                   <ul class="list-disc pl-5 text-gray-700">
                     <li>Natural sunlight (best lighting)</li>
                     <li>Clear, visible details of the face</li>
@@ -414,7 +213,7 @@
                       <div
                         class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
                         <a href="images/reference-photos/carrie-kitty.jpg" download
-                          class="text-white hover:text-amber-400">
+                          class="text-white hover:text-green-400">
                           <i class="fas fa-download text-3xl"></i>
                         </a>
                       </div>
@@ -427,7 +226,7 @@
                         class="rounded-lg object-cover w-full max-w-xs mb-2">
                       <div
                         class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
-                        <a href="images/reference-photos/cocker-3.jpg" download class="text-white hover:text-amber-400">
+                        <a href="images/reference-photos/cocker-3.jpg" download class="text-white hover:text-green-400">
                           <i class="fas fa-download text-3xl"></i>
                         </a>
                       </div>
@@ -435,8 +234,8 @@
                     <span class="text-xs text-gray-600">Blurry/poor lighting</span>
                   </div>
                 </div>
-                <div class="p-4 rounded-lg bg-amber-50">
-                  <h4 class="font-bold mb-2 text-amber-700">✗ Avoid These:</h4>
+                <div class="p-4 rounded-lg bg-green-50">
+                  <h4 class="font-bold mb-2 text-green-700">✗ Avoid These:</h4>
                   <ul class="list-disc pl-5 text-gray-700">
                     <li>Blurry or distant images</li>
                     <li>Poor lighting or shadows on the face</li>
@@ -453,7 +252,7 @@
                       <div
                         class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
                         <a href="images/reference-photos/cocker-edited.jpg" download
-                          class="text-white hover:text-amber-400">
+                          class="text-white hover:text-green-400">
                           <i class="fas fa-download text-3xl"></i>
                         </a>
                       </div>
@@ -467,7 +266,7 @@
                       <div
                         class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
                         <a href="images/reference-photos/avery-kitty.jpg" download
-                          class="text-white hover:text-amber-400">
+                          class="text-white hover:text-green-400">
                           <i class="fas fa-download text-3xl"></i>
                         </a>
                       </div>
@@ -499,100 +298,6 @@
     </div>
   </section>
 
-  <style>
-    /* Masonry layout styles */
-    .masonry-gallery {
-      column-count: 1;
-      column-gap: 1rem;
-      padding: 1rem;
-    }
-
-    @media (min-width: 640px) {
-      .masonry-gallery {
-        column-count: 2;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .masonry-gallery {
-        column-count: 3;
-      }
-    }
-
-    .gallery-item {
-      break-inside: avoid;
-      margin-bottom: 1rem;
-    }
-
-    .overlay {
-      opacity: 0;
-      transition: opacity 0.3s ease;
-      background: rgba(0, 0, 0, 0.6);
-      border-radius: 0.5rem;
-    }
-
-    .gallery-item:hover .overlay {
-      opacity: 1;
-    }
-
-    .download-icon {
-      color: white;
-      font-size: 1.5rem;
-      transition: transform 0.3s ease;
-    }
-
-    .gallery-item:hover .download-icon {
-      transform: translateY(2px);
-    }
-
-    .expand-icon img {
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
-      transition: transform 0.2s;
-    }
-
-    .expand-icon:hover img {
-      transform: scale(1.15);
-      filter: drop-shadow(0 4px 12px rgba(255, 193, 7, 0.5));
-    }
-
-    #expand-modal {
-      animation: fadeIn 0.2s;
-    }
-
-    @keyframes fadeIn {
-      from {
-        opacity: 0;
-      }
-
-      to {
-        opacity: 1;
-      }
-    }
-
-    .expand-icon img,
-    .download-icon i,
-    .download-icon svg {
-      width: 2rem;
-      height: 2rem;
-      max-width: 2rem;
-      max-height: 2rem;
-      min-width: 2rem;
-      min-height: 2rem;
-      display: inline-block;
-      vertical-align: middle;
-      border-radius: 0;
-      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.3));
-      transition: transform 0.2s, filter 0.2s;
-    }
-
-    .expand-icon:hover img,
-    .download-icon:hover i,
-    .download-icon:hover svg {
-      transform: scale(1.15);
-      filter: drop-shadow(0 4px 12px rgba(255, 193, 7, 0.5));
-    }
-  </style>
-
   <!-- Contact Section -->
   <section id="contact" class="py-20 px-4 bg-white">
     <div class="max-w-4xl mx-auto">
@@ -600,30 +305,30 @@
       <p class="text-center text-gray-600 mb-12">Fill out the form below and I'll get back to you within 1-2 business
         days to discuss your project</p>
 
-      <form class="bg-amber-50 rounded-lg shadow-md p-8">
+      <form class="bg-green-50 rounded-lg shadow-md p-8">
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label for="name" class="block text-gray-700 font-medium mb-2">Your Name</label>
             <input type="text" id="name" name="name"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="John Smith" required>
           </div>
           <div>
             <label for="email" class="block text-gray-700 font-medium mb-2">Email Address</label>
             <input type="email" id="email" name="email"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="john@example.com" required>
           </div>
           <div>
             <label for="pet-name" class="block text-gray-700 font-medium mb-2">Pet's Name</label>
             <input type="text" id="pet-name" name="pet-name"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Buddy" required>
           </div>
           <div>
             <label for="pet-type" class="block text-gray-700 font-medium mb-2">Pet Type</label>
             <select id="pet-type" name="pet-type"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required>
               <option value="" disabled selected>Select pet type</option>
               <option value="dog">Dog</option>
@@ -635,15 +340,15 @@
             <label for="size" class="block text-gray-700 font-medium mb-2">Portrait Size</label>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
               <label class="inline-flex items-center">
-                <input type="radio" class="form-radio text-amber-600" name="size" value="8x10" checked>
+                <input type="radio" class="form-radio text-green-600" name="size" value="8x10" checked>
                 <span class="ml-2">Standard (8"x10") - $200</span>
               </label>
               <label class="inline-flex items-center">
-                <input type="radio" class="form-radio text-amber-600" name="size" value="11x14">
+                <input type="radio" class="form-radio text-green-600" name="size" value="11x14">
                 <span class="ml-2">Deluxe (11"x14") - $350</span>
               </label>
               <label class="inline-flex items-center">
-                <input type="radio" class="form-radio text-amber-600" name="size" value="custom">
+                <input type="radio" class="form-radio text-green-600" name="size" value="custom">
                 <span class="ml-2">Custom - Get a quote</span>
               </label>
             </div>
@@ -651,7 +356,7 @@
           <div class="md:col-span-2">
             <label for="message" class="block text-gray-700 font-medium mb-2">Tell Me About Your Pet</label>
             <textarea id="message" name="message" rows="4"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Describe your pet's personality, any special features, and what you'd like in the portrait..."></textarea>
           </div>
           <div class="md:col-span-2">
@@ -666,7 +371,7 @@
                 </svg>
                 <div class="flex text-sm text-gray-600">
                   <label for="file-upload"
-                    class="relative cursor-pointer bg-white rounded-md font-medium text-amber-600 hover:text-amber-500 focus-within:outline-none">
+                    class="relative cursor-pointer bg-white rounded-md font-medium text-green-600 hover:text-green-500 focus-within:outline-none">
                     <span>Upload files</span>
                     <input id="file-upload" name="file-upload" type="file" class="sr-only" multiple>
                   </label>
@@ -678,7 +383,7 @@
           </div>
           <div class="md:col-span-2">
             <button type="submit"
-              class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">Submit
+              class="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-4 rounded-lg transition duration-300">Submit
               Commission Request</button>
           </div>
         </div>
@@ -692,7 +397,7 @@
       <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
         <div>
           <h3 class="text-xl font-bold mb-4 flex items-center">
-            <i class="fas fa-paw text-amber-600 mr-2"></i>
+            <i class="fas fa-paw text-green-600 mr-2"></i>
             <span>Pet Portraits</span>
           </h3>
           <p class="text-gray-400">Creating timeless pet portraits that celebrate your beloved companion's unique
@@ -701,22 +406,22 @@
         <div>
           <h4 class="font-bold mb-4">Quick Links</h4>
           <ul class="space-y-2">
-            <li><a href="#home" class="text-gray-400 hover:text-amber-600 transition duration-300">Home</a></li>
-            <li><a href="#gallery" class="text-gray-400 hover:text-amber-600 transition duration-300">Gallery</a></li>
-            <li><a href="#pricing" class="text-gray-400 hover:text-amber-600 transition duration-300">Pricing</a></li>
-            <li><a href="#contact" class="text-gray-400 hover:text-amber-600 transition duration-300">Contact</a></li>
+            <li><a href="#home" class="text-gray-400 hover:text-green-600 transition duration-300">Home</a></li>
+            <li><a href="#gallery" class="text-gray-400 hover:text-green-600 transition duration-300">Gallery</a></li>
+            <li><a href="#pricing" class="text-gray-400 hover:text-green-600 transition duration-300">Pricing</a></li>
+            <li><a href="#contact" class="text-gray-400 hover:text-green-600 transition duration-300">Contact</a></li>
           </ul>
         </div>
         <div>
           <h4 class="font-bold mb-4">Follow Me</h4>
           <div class="flex space-x-4">
-            <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i
+            <a href="#" class="text-gray-400 hover:text-green-600 transition duration-300 text-xl"><i
                 class="fab fa-instagram"></i></a>
-            <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i
+            <a href="#" class="text-gray-400 hover:text-green-600 transition duration-300 text-xl"><i
                 class="fab fa-facebook"></i></a>
-            <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i
+            <a href="#" class="text-gray-400 hover:text-green-600 transition duration-300 text-xl"><i
                 class="fab fa-pinterest"></i></a>
-            <a href="#" class="text-gray-400 hover:text-amber-600 transition duration-300 text-xl"><i
+            <a href="#" class="text-gray-400 hover:text-green-600 transition duration-300 text-xl"><i
                 class="fab fa-etsy"></i></a>
           </div>
           <h4 class="font-bold mt-6 mb-4">Business Hours</h4>
@@ -730,7 +435,7 @@
           <form class="flex">
             <input type="email" placeholder="Your email"
               class="px-4 py-2 w-full rounded-l-lg focus:outline-none text-gray-900">
-            <button type="submit" class="bg-amber-600 hover:bg-amber-700 px-4 rounded-r-lg transition duration-300"><i
+            <button type="submit" class="bg-green-600 hover:bg-green-700 px-4 rounded-r-lg transition duration-300"><i
                 class="fas fa-paper-plane"></i></button>
           </form>
         </div>
@@ -748,7 +453,7 @@
         <div class="flex justify-between items-start mb-4">
           <div>
             <h3 class="text-2xl font-bold">Golden Sunshine</h3>
-            <p class="text-amber-600 font-semibold">Golden Retriever Portrait</p>
+            <p class="text-green-600 font-semibold">Golden Retriever Portrait</p>
           </div>
           <button class="modal-close text-gray-500 hover:text-gray-700">
             <i class="fas fa-times text-2xl"></i>
@@ -760,32 +465,32 @@
           alt="Golden Retriever portrait" class="w-full rounded-lg mb-4">
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div class="bg-amber-50 p-4 rounded-lg">
+          <div class="bg-green-50 p-4 rounded-lg">
             <h4 class="font-bold mb-2">Details</h4>
             <ul class="text-gray-600 space-y-2">
               <li class="flex items-start">
-                <i class="fas fa-ruler-combined text-amber-600 mt-1 mr-2"></i>
+                <i class="fas fa-ruler-combined text-green-600 mt-1 mr-2"></i>
                 <span>8"x10" drawing area</span>
               </li>
               <li class="flex items-start">
-                <i class="fas fa-palette text-amber-600 mt-1 mr-2"></i>
+                <i class="fas fa-palette text-green-600 mt-1 mr-2"></i>
                 <span>Prismacolor Premier pencils</span>
               </li>
               <li class="flex items-start">
-                <i class="fas fa-calendar-alt text-amber-600 mt-1 mr-2"></i>
+                <i class="fas fa-calendar-alt text-green-600 mt-1 mr-2"></i>
                 <span>Completed June 2023</span>
               </li>
             </ul>
           </div>
 
-          <div class="bg-amber-50 p-4 rounded-lg">
+          <div class="bg-green-50 p-4 rounded-lg">
             <h4 class="font-bold mb-2">Client Feedback</h4>
             <p class="text-gray-600 italic">"I was speechless when I saw this portrait. Sarah captured Max's goofy
               personality perfectly. The way she rendered his fur is incredible - it looks so real you want to reach out
               and pet it!"</p>
           </div>
 
-          <div class="bg-amber-50 p-4 rounded-lg">
+          <div class="bg-green-50 p-4 rounded-lg">
             <h4 class="font-bold mb-2">Artistic Notes</h4>
             <p class="text-gray-600">This portrait required over 30 hours of work, with special attention paid to
               recreating the golden retriever's distinctive layered fur texture. The eyes were built up with 15
@@ -795,7 +500,7 @@
 
         <div class="flex justify-center">
           <button
-            class="bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+            class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-6 rounded-full transition duration-300">
             Commission Similar Portrait
           </button>
         </div>
@@ -810,49 +515,7 @@
   <script src="shared-modal.js"></script>
   <script src="gallery.js"></script>
   <script src="happy-clients.js"></script>
-  <script>
-    // Dynamic nav highlighting
-    const navLinks = document.querySelectorAll('.nav-link');
-    const sectionIds = Array.from(navLinks).map(link => link.getAttribute('data-section'));
-    const sections = sectionIds.map(id => document.getElementById(id));
-
-    function setActiveNav(sectionId) {
-      navLinks.forEach(link => {
-        if (link.getAttribute('data-section') === sectionId) {
-          link.classList.add('text-amber-600', 'border-b-4', 'border-amber-600', 'font-semibold');
-          link.classList.remove('text-gray-500');
-        } else {
-          link.classList.remove('text-amber-600', 'border-b-4', 'border-amber-600', 'font-semibold');
-          link.classList.add('text-gray-500');
-        }
-      });
-    }
-
-    // On click, set active
-    navLinks.forEach(link => {
-      link.addEventListener('click', function () {
-        setActiveNav(this.getAttribute('data-section'));
-      });
-    });
-
-    // On scroll, set active based on section in view
-    window.addEventListener('scroll', () => {
-      let current = sectionIds[0];
-      for (let i = 0; i < sections.length; i++) {
-        const section = sections[i];
-        if (section) {
-          const rect = section.getBoundingClientRect();
-          if (rect.top <= 80) {
-            current = sectionIds[i];
-          }
-        }
-      }
-      setActiveNav(current);
-    });
-
-    // Set initial active nav
-    setActiveNav(sectionIds[0]);
-  </script>
+  <script src="nav.js"></script>
 </body>
 
 </html>

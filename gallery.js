@@ -28,7 +28,7 @@ function renderGallery(category) {
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
         <div class="flex space-x-4">
-          <a href="${photo.path}" download class="text-white hover:text-amber-400 download-icon" title="Download">
+          <a href="${photo.path}" download class="text-white hover:text-green-400 download-icon" title="Download">
             <i class="fas fa-download text-3xl"></i>
           </a>
           <button class="expand-icon" data-img="${photo.path}" title="Expand" style="background:transparent;border:none;outline:none;cursor:pointer;">
@@ -44,11 +44,11 @@ function renderGallery(category) {
     const btn = document.getElementById('btn-' + cat.id);
     if (btn) {
       if (cat.id === category) {
-        btn.classList.add('bg-amber-600', 'text-white');
-        btn.classList.remove('bg-white', 'text-amber-600');
+btn.classList.add('bg-green-600', 'text-white');
+btn.classList.remove('bg-white', 'text-green-600');
       } else {
-        btn.classList.remove('bg-amber-600', 'text-white');
-        btn.classList.add('bg-white', 'text-amber-600');
+btn.classList.remove('bg-green-600', 'text-white');
+btn.classList.add('bg-white', 'text-green-600');
       }
     }
   });
