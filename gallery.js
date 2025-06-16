@@ -19,11 +19,13 @@ function getCategoryFromPath(path) {
   return null;
 }
 
-function renderGallery(category) {
-  masonryGallery.innerHTML = '';
-  allPhotos.filter(photo => photo.category === category).forEach(photo => {
+function initializeGallery(photos) {
+  masonryGallery.innerHTML = ''; // Clear any existing content
+  photos.forEach(photo => {
     const div = document.createElement('div');
-    div.className = 'gallery-item relative';
+    // Add category as a data attribute and initially hide if not 'cats'
+    div.className = `gallery-item relative ${photo.category !== 'cats' ? 'hidden' : ''}`;
+    div.dataset.category = photo.category;
     div.innerHTML = `
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
@@ -39,23 +41,36 @@ function renderGallery(category) {
     `;
     masonryGallery.appendChild(div);
   });
-  // Update button styles
-  GALLERY_CATEGORIES.forEach(cat => {
-    const btn = document.getElementById('btn-' + cat.id);
-    if (btn) {
-      if (cat.id === category) {
-btn.classList.add('bg-green-600', 'text-white');
-btn.classList.remove('bg-white', 'text-green-600');
-      } else {
-btn.classList.remove('bg-green-600', 'text-white');
-btn.classList.add('bg-white', 'text-green-600');
-      }
-    }
-  });
+
   // Use shared modal logic for expand icons
   if (window.SharedModal) {
     SharedModal.addExpandListeners('.expand-icon');
   }
+}
+
+function filterGalleryView(selectedCategory) {
+  const galleryItems = masonryGallery.children;
+  for (let item of galleryItems) {
+    if (item.dataset.category === selectedCategory) {
+      item.classList.remove('hidden');
+    } else {
+      item.classList.add('hidden');
+    }
+  }
+
+  // Update button styles
+  GALLERY_CATEGORIES.forEach(cat => {
+    const btn = document.getElementById('btn-' + cat.id);
+    if (btn) {
+      if (cat.id === selectedCategory) {
+        btn.classList.add('bg-green-600', 'text-white');
+        btn.classList.remove('bg-white', 'text-green-600');
+      } else {
+        btn.classList.remove('bg-green-600', 'text-white');
+        btn.classList.add('bg-white', 'text-green-600');
+      }
+    }
+  });
 }
 
 fetch('photos_list.txt')
@@ -70,12 +85,14 @@ fetch('photos_list.txt')
         category: getCategoryFromPath(path)
       }))
       .filter(photo => photo.category);
-    renderGallery('cats');
+    
+    initializeGallery(allPhotos); // Load all images into the DOM
+    filterGalleryView('cats'); // Show 'cats' by default and set button styles
   });
 
 GALLERY_CATEGORIES.forEach(cat => {
   const btn = document.getElementById('btn-' + cat.id);
   if (btn) {
-    btn.addEventListener('click', () => renderGallery(cat.id));
+    btn.addEventListener('click', () => filterGalleryView(cat.id));
   }
 });
