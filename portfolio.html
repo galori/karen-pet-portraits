@@ -71,7 +71,7 @@
       <p class="text-xl md:text-2xl mb-8">Exquisite colored pencil drawings that capture your pet's unique personality
       </p>
       <a href="#contact"
-        class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">Commission
+        class="bg-green-800 hover:bg-green-900 text-white font-bold py-3 px-8 rounded-full text-lg transition duration-300">Commission
         Yours Today</a>
       <!-- Instagram Link -->
       <div class="flex flex-col items-center justify-center mt-10">
@@ -360,14 +360,14 @@
               placeholder="john@example.com" required>
           </div>
           <div>
-            <label for="pet-name" class="block text-gray-700 font-medium mb-2">Pet's Name</label>
-            <input type="text" id="pet-name" name="pet-name"
+            <label for="pet_name" class="block text-gray-700 font-medium mb-2">Pet's Name</label>
+            <input type="text" id="pet_name" name="pet_name"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Buddy" required>
           </div>
           <div>
-            <label for="pet-type" class="block text-gray-700 font-medium mb-2">Pet Type</label>
-            <select id="pet-type" name="pet-type"
+            <label for="pet_type" class="block text-gray-700 font-medium mb-2">Pet Type</label>
+            <select id="pet_type" name="pet_type"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               required>
               <option value="" disabled selected>Select pet type</option>
@@ -376,9 +376,12 @@
               <option value="other">Other</option>
             </select>
           </div>
+          <div style="display: none;">
+            <input type="hidden" id="time" name="time" value="">
+          </div>
           <div class="md:col-span-2">
-            <label for="message" class="block text-gray-700 font-medium mb-2">Tell Me About Your Pet</label>
-            <textarea id="message" name="message" rows="4"
+            <label for="tell_me" class="block text-gray-700 font-medium mb-2">Tell Me About Your Pet</label>
+            <textarea id="tell_me" name="tell_me" rows="4"
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Describe your pet's personality, any special features, and what you'd like in the portrait..."></textarea>
           </div>
@@ -473,6 +476,21 @@
   <!-- Similar modals for other gallery items would go here -->
   <!-- For brevity, I've included just one modal -->
 
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  <script>
+    emailjs.init('tRgYjWVnyVITNAFIQ'); 
+
+    function sendEmail(e) {
+      e.preventDefault(); 
+      // Set the hidden time field value
+      document.getElementById('time').value = new Date().toLocaleString();
+      emailjs.sendForm('service_78c1rh4', 'template_bn0z7z9', e.target)
+             .then(() => alert('Sent!'))
+             .catch(console.error);
+    }
+
+    document.querySelector('#contact form').addEventListener('submit', sendEmail);
+  </script>
   <script src="portfolio.js"></script>
   <script src="shared-modal.js"></script>
   <script src="gallery.js"></script>
