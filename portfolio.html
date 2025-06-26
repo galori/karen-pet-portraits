@@ -79,7 +79,7 @@
           class="flex items-center space-x-4 bg-gradient-to-r from-pink-500 via-red-500 to-yellow-500 p-2 pr-6 rounded-full shadow-lg hover:scale-105 transition-transform duration-200 border-4 border-white">
           <img src="images/instagram/avatar.jpg" alt="Instagram Avatar"
             class="w-16 h-16 rounded-full border-2 border-white shadow-md">
-          <span class="flex items-center text-white text-2xl font-bold">
+          <span class="flex items-center text-white text-1xl font-bold">
             <i class="fab fa-instagram mr-2 text-3xl"></i>
             @karenshrirasteinitz
           </span>
@@ -125,12 +125,6 @@
                   class="fas fa-paint-brush mr-2 text-green-600"></i>Portrait Details</h3>
               <ul class="space-y-4">
                 <li class="flex items-start">
-                  <i class="fas fa-paint-brush mt-1 mr-3 text-green-600"></i>
-                  <div>
-                    <span class="font-bold">Medium:</span> Colored pencil on high-quality archival paper
-                  </div>
-                </li>
-                <li class="flex items-start">
                   <i class="fas fa-ruler-combined mt-1 mr-3 text-green-600"></i>
                   <div>
                     <span class="font-bold">Size:</span> 9" x 12" (one pet) - $350.00 plus shipping
@@ -158,7 +152,6 @@
               <div class="space-y-8">
                 <div>
                   <p class="mb-2">The quality of your reference photo is vital to helping me capture your pet on paper. <span class="font-semibold text-green-700">While candid or sentimental photos are meaningful, a good portrait must have spot-on details. Please ensure your photo is clear and well-lit so I can capture your pet's true personality.</span></p>
-                  <p class="mb-2 italic text-gray-600">Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. <span class="font-semibold text-green-700">Have fun with the photos!</span></p>
                 </div>
                 <div class="space-y-6">
                   <div class="p-4 rounded-lg bg-green-50">
@@ -311,7 +304,7 @@
                   </div>
                 </div>
                 <div>
-                  <p class="italic text-gray-600">"Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. Have fun with the photos!"</p>
+                  <p class="mb-2 italic text-gray-600">Some of my favorite drawings have a unique point of interest, like a tongue sticking out, a signature collar, or an ear that's flipped inside out. <span class="font-semibold text-green-700">Have fun with the photos!</span></p>
                 </div>
               </div>
             </div>
@@ -359,25 +352,13 @@
               class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
               placeholder="Buddy" required>
           </div>
-          <div>
-            <label for="pet_type" class="block text-gray-700 font-medium mb-2">Pet Type</label>
-            <select id="pet_type" name="pet_type"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              required>
-              <option value="" disabled selected>Select pet type</option>
-              <option value="dog">Dog</option>
-              <option value="cat">Cat</option>
-              <option value="other">Other</option>
-            </select>
-          </div>
           <div style="display: none;">
             <input type="hidden" id="time" name="time" value="">
           </div>
           <div class="md:col-span-2">
-            <label for="tell_me" class="block text-gray-700 font-medium mb-2">Tell Me About Your Pet</label>
+            <label for="tell_me" class="block text-gray-700 font-medium mb-2"></label>
             <textarea id="tell_me" name="tell_me" rows="4"
-              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Describe your pet's personality, any special features, and what you'd like in the portrait..."></textarea>
+              class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"></textarea>
           </div>
           <div class="md:col-span-2">
             <button type="submit"
