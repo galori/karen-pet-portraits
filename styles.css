@@ -18,7 +18,7 @@ html {
 }
 
 .drawing-bg {
-  background-color: #f1f5f9; #slate-100
+  background-color: #f1f5f9; /* slate-100 */
 }
 
 .custom-shape-divider-bottom-1688386754 {
@@ -209,21 +209,19 @@ html {
 @media (min-width: 641px) {
   .gallery-filter-link {
     background-color: #ffffff;
-    color: #16a34a;
+    color: #64748b; /* slate-500 */
     padding: 0.5rem 1.5rem;
     border-radius: 9999px; /* Fully rounded */
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
-  
   .gallery-filter-link:hover {
-    background-color: #f0fdf4;
-    color: #15803d;
+    background-color: #f1f5f9; /* slate-100 */
+    color: #334155; /* slate-700 */
   }
-  
-  /* Active state for the first link (Cats) on desktop */
-  .gallery-filter-link:first-child {
-    background-color: #16a34a;
-    color: white;
+  /* Active state for selected link on desktop */
+  .gallery-filter-link.active {
+    background-color: #64748b; /* slate-500 */
+    color: #fff;
   }
 }
 
@@ -234,30 +232,27 @@ html {
     border-radius: 0;
     padding: 0.25rem 0.5rem;
     font-size: 0.875rem;
-    color: #16a34a;
+    color: #64748b; /* slate-500 */
   }
-  
   .gallery-filter-link:hover {
-    color: #15803d;
+    color: #334155; /* slate-700 */
     text-decoration: underline;
   }
-    
   .gallery-nav-container {
     flex-wrap: nowrap; /* Prevent wrapping */
     gap: 0; /* No extra gap */
     font-size: 0;
   }
-  
   .mobile-text {
     font-size: 0.875rem; /* Reset font size for text */
   }
-  
-  /* Active state for the first link (Cats) on mobile */
-  .gallery-filter-link:first-child {
-    color: #15803d;
-    text-decoration: underline;
+  /* Active state for selected link on mobile */
+  .gallery-filter-link.active {
+    background-color: #64748b; /* slate-500 */
+    color: #fff;
+    border-radius: 9999px;
+    padding: 0.25rem 0.5rem;
   }
-  
   /* Hide separator on the last item */
   .gallery-filter-link:last-child .mobile-separator {
     display: none;

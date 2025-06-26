@@ -63,11 +63,9 @@ function filterGalleryView(selectedCategory) {
     const btn = document.getElementById('btn-' + cat.id);
     if (btn) {
       if (cat.id === selectedCategory) {
-        btn.classList.add('bg-green-600', 'text-white');
-        btn.classList.remove('bg-white', 'text-green-600');
+        btn.classList.add('active');
       } else {
-        btn.classList.remove('bg-green-600', 'text-white');
-        btn.classList.add('bg-white', 'text-green-600');
+        btn.classList.remove('active');
       }
     }
   });
