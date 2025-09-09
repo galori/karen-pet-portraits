@@ -59,7 +59,6 @@ photos/graphite/IMG_5958.PNG
 photos/graphite/IMG_6538.PNG
 photos/graphite/IMG_5899.PNG
 photos/graphite/IMG_5872.PNG
-photos/graphite/IMG_3806.PNG
 photos/graphite/IMG_5873.PNG
 photos/graphite/IMG_5898.PNG
 photos/graphite/IMG_3804.PNG
