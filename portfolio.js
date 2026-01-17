@@ -44,4 +44,27 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     });
+
+    // Email obfuscation and copy to clipboard
+    const emailLink = document.getElementById('email-link');
+    const copyEmailButton = document.getElementById('copy-email-button');
+    const copySuccessMessage = document.getElementById('copy-success-message');
+
+    if (emailLink && copyEmailButton && copySuccessMessage) {
+        const user = 'karen';
+        const domain = 'steinitz.com';
+        const email = user + '@' + domain;
+
+        emailLink.href = 'mailto:' + email;
+        emailLink.innerHTML = email;
+
+        copyEmailButton.addEventListener('click', () => {
+            navigator.clipboard.writeText(email).then(() => {
+                copySuccessMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    copySuccessMessage.classList.add('hidden');
+                }, 2000);
+            });
+        });
+    }
 });

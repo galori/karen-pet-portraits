@@ -9,4 +9,4 @@
 
 # deploy
 
-`scripts/deploy.sh`
+Push to github, it automatically deploys to Cloudflare
