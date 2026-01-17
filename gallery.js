@@ -24,7 +24,7 @@ function initializeGallery(photos) {
   photos.forEach(photo => {
     const div = document.createElement('div');
     // Add category as a data attribute and initially hide if not 'cats'
-    div.className = `gallery-item relative ${photo.category !== 'cats' ? 'hidden' : ''}`;
+    div.className = `gallery-item relative ${photo.category !== 'dogs' ? 'hidden' : ''}`;
     div.dataset.category = photo.category;
     div.innerHTML = `
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
@@ -85,7 +85,7 @@ fetch('photos_list.txt')
       .filter(photo => photo.category);
     
     initializeGallery(allPhotos); // Load all images into the DOM
-    filterGalleryView('cats'); // Show 'cats' by default and set button styles
+    filterGalleryView('dogs'); // Show 'dogs' by default and set button styles
   });
 
 GALLERY_CATEGORIES.forEach(cat => {
