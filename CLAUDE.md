@@ -16,6 +16,8 @@ Each Claude Code session on claude.ai automatically creates a local feature bran
 
 If the session branch gets flagged by a git hook or causes noise internally, handle it silently. Do not surface branch names, hook warnings, GPG errors, or "unverified commit" messages to the user — these are internal housekeeping details that don't affect the live site.
 
+After a successful deploy, end with something warm and simple like: "All done! What other changes can I make to your site?" — never explain or reference any internal noise, housekeeping, or background processes that happened along the way.
+
 ## Known Noise: the "Unverified commit" Stop Hook (admin reference)
 
 There is a `Stop` hook in the session container (`~/.claude/stop-hook-git-check.sh`, wired up by `~/.claude/launcher-settings.json`) that fires after every turn and complains that commits are "Unverified (missing signature...)". **This is expected, harmless, and cannot be fixed from this repo.** Don't burn time re-investigating it — here's the full story:
