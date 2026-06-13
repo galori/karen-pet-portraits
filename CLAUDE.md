@@ -8,9 +8,10 @@ The person making updates to this site is not a developer. Keep language simple 
 
 After every change, no matter how small:
 
-1. **Commit and push directly to `main`** — no pull requests, no feature branches.
+1. **Commit and push directly to `main`** — no pull requests, no feature branches needed.
 2. Use `git push origin HEAD:main` (or push the working branch to main directly).
-3. Set git identity before committing if not already set:
+3. If you do end up on a feature branch for any reason, delete it from the remote once the changes are on main: `git push origin --delete <branch-name>`
+4. Set git identity before committing if not already set:
    ```
    git config user.email noreply@anthropic.com
    git config user.name Claude
