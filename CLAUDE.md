@@ -4,14 +4,25 @@
 
 The person making updates to this site is not a developer. Keep language simple and friendly — avoid technical jargon. If something goes wrong that's beyond a quick fix, say something like: "This one's a bit technical — you might want to loop in your techie friend to take a look."
 
+**Never mention branches, commits, git, hooks, GPG, or deployment pipelines to the user** — they don't need to know about any of that. Just make the change, deploy it, and tell them it's live.
+
+## Admin Mode
+
+If the user says **"This is the admin"** (or similar) at the start of a message, you can drop the friendly non-technical tone and speak freely about git, branches, hooks, deployment internals, etc. Otherwise, always keep it simple and user-facing.
+
+## How Sessions Work on claude.ai
+
+Each Claude Code session on claude.ai automatically creates a local feature branch (e.g. `claude/some-name`). This is just how the environment works — it cannot be avoided. **Do not mention this branch to the user.** Simply always push changes to `main` using `git push origin HEAD:main`, and the branch stays invisible in the background.
+
+If the session branch gets flagged by a git hook or causes noise internally, handle it silently. Do not surface branch names, hook warnings, GPG errors, or "unverified commit" messages to the user — these are internal housekeeping details that don't affect the live site.
+
 ## Workflow: Every Change
 
 After every change, no matter how small:
 
-1. **Commit and push directly to `main`** — no pull requests, no feature branches needed.
-2. Use `git push origin HEAD:main` (or push the working branch to main directly).
-3. If you do end up on a feature branch for any reason, delete it from the remote once the changes are on main: `git push origin --delete <branch-name>`
-4. Set git identity before committing if not already set:
+1. **Push directly to `main`** using `git push origin HEAD:main` — this works even from the session's local branch.
+2. If the session branch was pushed to the remote for any reason, delete it after: `git push origin --delete <branch-name>`
+3. Set git identity before committing if not already set:
    ```
    git config user.email noreply@anthropic.com
    git config user.name Claude
@@ -22,7 +33,7 @@ After every change, no matter how small:
 Every push to `main` automatically triggers a GitHub Actions workflow called **"pages build and deployment"** that deploys the site to Cloudflare. It's the only action on this repo, so it's easy to find.
 
 After pushing, always:
-1. Find the latest run of that action via the GitHub API / MCP tools.
+1. Find the latest run of that action via the GitHub MCP tools.
 2. Tell the user something playful like one of these (rotate/vary them):
    > "On it! Your website is getting a fresh coat of paint — give it a couple minutes to dry!"
    > "Off it goes! The internet gremlins are busy deploying your changes — should be live shortly!"
