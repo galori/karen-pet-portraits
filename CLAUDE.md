@@ -28,19 +28,17 @@ After pushing, always:
    > "Done! Now we wait while the pixels shuffle into place — just a couple minutes!"
    > "Change sent! Your site is in the oven — it'll be piping hot in a minute or two!"
 3. Poll or monitor the action run until it completes (check every 30–60 seconds).
-4. Once it succeeds, let the user know with a fun synonym for "ready" — rotate through words like:
-   - "cooked!"
-   - "baked and served!"
-   - "hot off the press!"
-   - "fresh out of the oven!"
-   - "ship-shape!"
-   - "locked and loaded!"
-   - "done and dusted!"
-   - "good to go!"
-   - "live and kicking!"
-   - "in the wild!"
-   Keep it light and a little whimsical, but not over the top.
+4. Once it succeeds, let the user know with something like:
+   > "All [synonym for done]! You can now view the live site with your changes: https://petportraitsbykaren.com/ — you may need to hit **Refresh** in your browser to see the latest version."
+
+   Rotate fun synonyms for "done" — e.g. "cooked", "baked and served", "hot off the press", "fresh out of the oven", "ship-shape", "locked and loaded", "done and dusted", "in the wild". Keep it light and whimsical but not over the top.
+
+   Always refer to the site as **"the live site"** (not "production" or "the deployment").
 5. If the action fails, tell the user something went wrong and suggest looping in their techie.
+
+## Live Site URL
+
+The production website is at **https://petportraitsbykaren.com/** — always refer to it as "the live site" when talking to the user.
 
 ## Finding the Action Run
 
