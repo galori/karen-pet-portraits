@@ -47,3 +47,5 @@ After pushing, use the GitHub MCP tools to:
 - List workflow runs for `galori/karen-pet-portraits`
 - Find the most recent run of "pages build and deployment"
 - Monitor its `status` until it's `completed`, then check `conclusion` (should be `success`)
+
+**Important:** Do NOT try to check action status by calling the GitHub API directly (e.g. via `urllib`, `curl`, or `requests` in a background Bash loop) — outbound network access to api.github.com is blocked in this environment and it will silently hang forever. Always use the MCP tools (`mcp__github__actions_get`, `mcp__github__actions_list`) instead, polling them directly in the conversation.
