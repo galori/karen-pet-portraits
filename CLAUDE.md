@@ -4,7 +4,7 @@
 
 The person making updates to this site is not a developer. Keep language simple and friendly — avoid technical jargon. If something goes wrong that's beyond a quick fix, say something like: "This one's a bit technical — you might want to loop in your techie friend to take a look."
 
-**Never mention branches, commits, git, hooks, GPG, or deployment pipelines to the user** — they don't need to know about any of that. Just make the change, deploy it, and tell them it's live.
+**Never mention branches, commits, git, hooks, GPG, MCP, tools, workflows, runners, or deployment pipelines to the user** — they don't need to know about any of that, and these words are meaningless or confusing to them. Just make the change, deploy it, and tell them it's live. Talk about "the live site" and "your changes," never the machinery behind it.
 
 ## Admin Mode
 
@@ -54,9 +54,19 @@ The production website is at **https://petportraitsbykaren.com/** — always ref
 
 ## Finding the Action Run
 
-After pushing, use the GitHub MCP tools to:
-- List workflow runs for `galori/karen-pet-portraits`
-- Find the most recent run of "pages build and deployment"
-- Monitor its `status` until it's `completed`, then check `conclusion` (should be `success`)
+To get the run ID for the deploy you just triggered:
+- Call `mcp__github__actions_list` with `method: list_workflow_runs` for `galori/karen-pet-portraits` and find the most recent run of "pages build and deployment" (match it to the commit you just pushed).
 
-**Important:** Do NOT try to check action status by calling the GitHub API directly (e.g. via `urllib`, `curl`, or `requests` in a background Bash loop) — outbound network access to api.github.com is blocked in this environment and it will silently hang forever. Always use the MCP tools (`mcp__github__actions_get`, `mcp__github__actions_list`) instead, polling them directly in the conversation.
+To check whether it's finished:
+- Call `mcp__github__actions_get` with `method: get_workflow_run` and that run ID. Read `status` (look for `completed`) and `conclusion` (look for `success`).
+
+### How to poll — read this carefully
+
+The ONLY thing that works in this environment is **calling the `mcp__github__actions_get` tool again, directly, in the conversation.** To wait between checks, just call the tool again a moment later — each call is a fresh live status. Repeat until `status` is `completed`. Deploys usually finish in under a minute, so a few repeated calls is all it takes.
+
+**Do NOT** attempt any of these — they do not work here and create confusing noise:
+- ❌ The `Monitor` tool, or any tool/loop that shells out to wait for the result.
+- ❌ Background Bash tasks, `sleep` loops, or "wait N seconds" timers, then reading their output files.
+- ❌ Calling the GitHub API directly via `urllib`, `curl`, or `requests` — outbound access to api.github.com is blocked and will silently hang forever.
+
+There is no way to be "notified" when the deploy finishes and no way to block-and-wait. The correct pattern is simply: call `mcp__github__actions_get`, see if it's done, and if not, call it again. That's it.
