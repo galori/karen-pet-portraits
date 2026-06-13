@@ -22,8 +22,11 @@ Every push to `main` automatically triggers a GitHub Actions workflow called **"
 
 After pushing, always:
 1. Find the latest run of that action via the GitHub API / MCP tools.
-2. Tell the user something like:
-   > "Ok, updating your website — stand by, it'll take a couple minutes for the changes to go live!"
+2. Tell the user something playful like one of these (rotate/vary them):
+   > "On it! Your website is getting a fresh coat of paint — give it a couple minutes to dry!"
+   > "Off it goes! The internet gremlins are busy deploying your changes — should be live shortly!"
+   > "Done! Now we wait while the pixels shuffle into place — just a couple minutes!"
+   > "Change sent! Your site is in the oven — it'll be piping hot in a minute or two!"
 3. Poll or monitor the action run until it completes (check every 30–60 seconds).
 4. Once it succeeds, let the user know with a fun synonym for "ready" — rotate through words like:
    - "cooked!"
