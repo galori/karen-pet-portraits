@@ -35,7 +35,7 @@ photos/dog/IMG_3997.PNG
 photos/dog/IMG_0035.PNG
 photos/dog/IMG_5984.PNG
 photos/dog/IMG_5985.PNG
-photos/dog/IMG_0037.PNG
+photos/dog/IMG_4605.jpeg
 photos/dog/IMG_6722.PNG
 photos/dog/IMG_5997.PNG
 photos/ink_and_pen/IMG_6016.PNG
