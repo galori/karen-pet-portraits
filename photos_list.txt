@@ -4,8 +4,10 @@ photos/cat/_.jpg
 photos/cat/IMG_5939.PNG
 photos/cat/ _.jpg
 photos/cat/IMG_0058.PNG
+photos/cat/IMG_0087.PNG
 photos/cat/IMG_0052.PNG
 photos/cat/IMG_5944.PNG
+photos/cat/IMG_5990.PNG
 photos/cat/IMG_5946.PNG
 photos/cat/IMG_5995.PNG
 photos/cat/IMG_5942.PNG
@@ -13,8 +15,6 @@ photos/cat/IMG_5943.PNG
 photos/cat/IMG_5994.PNG
 photos/cat/IMG_5955.PNG
 photos/cat/IMG_5941.PNG
-photos/cat/IMG_0087.PNG
-photos/cat/IMG_5990.PNG
 photos/.DS_Store
 photos/dog/IMG_4455.jpeg
 photos/dog/photooutput.jpeg
@@ -22,10 +22,8 @@ photos/dog/IMG_4606.jpeg
 photos/dog/IMG_5769.PNG
 photos/dog/IMG_5988.PNG
 photos/dog/IMG_7810.JPG
-photos/dog/IMG_5907.PNG
 photos/dog/IMG_5905.PNG
 photos/dog/IMG_5904.PNG
-photos/dog/IMG_3805.JPG
 photos/dog/IMG_9492.JPG
 photos/dog/IMG_5903.PNG
 photos/dog/IMG_0042.PNG
@@ -41,6 +39,8 @@ photos/dog/IMG_5997.PNG
 photos/dog/IMG_3150.jpeg
 photos/dog/IMG_6800.PNG
 photos/dog/IMG_6801.PNG
+photos/dog/IMG_5907.PNG
+photos/dog/IMG_3805.JPG
 photos/ink_and_pen/IMG_6016.PNG
 photos/ink_and_pen/IMG_5871.PNG
 photos/ink_and_pen/IMG_5865.PNG
