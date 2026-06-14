@@ -18,7 +18,6 @@ photos/cat/IMG_5941.PNG
 photos/.DS_Store
 photos/dog/IMG_4455.jpeg
 photos/dog/IMG_5769.PNG
-photos/dog/photo-output.jpeg
 photos/dog/IMG_5988.PNG
 photos/dog/IMG_7810.JPG
 photos/dog/IMG_5907.PNG
