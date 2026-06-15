@@ -178,6 +178,9 @@ html {
 
 /* Gallery number badges for referencing specific images */
 .gallery-number-badge {
+  min-width: 3.25rem;
+  height: 2.5rem;
+  padding: 0 0.65rem;
   transition: opacity 0.2s ease, transform 0.2s ease;
   transform: scale(0.9);
   z-index: 20 !important;

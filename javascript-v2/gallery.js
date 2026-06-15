@@ -2,10 +2,10 @@
 // Dynamically loads images from photos_list.txt and displays them by category
 
 const GALLERY_CATEGORIES = [
-  { id: 'cats', label: 'Cats', folder: 'cat' },
-  { id: 'dogs', label: 'Dogs', folder: 'dog' },
-  { id: 'graphite', label: 'Graphite', folder: 'graphite' },
-  { id: 'ink', label: 'Ink & Pen', folder: 'ink_and_pen' }
+  { id: 'cats', label: 'Cats', folder: 'cat', prefix: 'c' },
+  { id: 'dogs', label: 'Dogs', folder: 'dog', prefix: 'd' },
+  { id: 'graphite', label: 'Graphite', folder: 'graphite', prefix: 'g' },
+  { id: 'ink', label: 'Ink & Pen', folder: 'ink_and_pen', prefix: 'i' }
 ];
 
 const masonryGallery = document.getElementById('masonry-gallery');
@@ -28,15 +28,20 @@ let numbersVisible = false;
 
 function initializeGallery(photos) {
   masonryGallery.innerHTML = ''; // Clear any existing content
-  photos.forEach((photo, index) => {
+  const categoryCounts = {};
+
+  photos.forEach(photo => {
+    categoryCounts[photo.category] = (categoryCounts[photo.category] || 0) + 1;
+    const category = GALLERY_CATEGORIES.find(item => item.id === photo.category);
+    const photoNumber = `${category.prefix}-${categoryCounts[photo.category]}`;
     const div = document.createElement('div');
     // Add category as a data attribute and initially hide if not 'cats'
     div.className = `gallery-item relative ${photo.category !== 'dogs' ? 'hidden' : ''}`;
     div.dataset.category = photo.category;
-    div.dataset.index = index + 1; // 1-based index for human-friendly numbering
+    div.dataset.index = photoNumber;
     div.innerHTML = `
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
-      <div class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-75 text-white text-xl font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-lg" hidden>${index + 1}</div>
+      <div class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-75 text-white text-lg font-bold rounded-full flex items-center justify-center shadow-lg" hidden>${photoNumber}</div>
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
         <div class="flex space-x-4">
           <a href="${photo.path}" download="${getDownloadName(photo)}" class="text-white hover:text-green-400 download-icon" title="Download">
