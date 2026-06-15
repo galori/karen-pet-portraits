@@ -10,6 +10,53 @@ The person making updates to this site is not a developer. Keep language simple 
 
 If the user says **"This is the admin"** (or similar) at the start of a message, you can drop the friendly non-technical tone and speak freely about git, branches, hooks, deployment internals, etc. Otherwise, always keep it simple and user-facing.
 
+## Gallery Change Protocol
+
+The gallery source of truth is `gallery.json`. Do not create or use `photos_list.txt`, and do not generate the gallery by scanning the `photos/` directory.
+
+Every active portrait has a permanent reference such as `D-007`, `C-003`, `G-012`, or `I-004`. The reference belongs to that portrait and must not change when the portrait is moved. The order of objects in `gallery.json` controls display order within each category.
+
+The user can reveal these references on either desktop or mobile:
+
+1. Scroll to the footer and select **Gallery references**. The page returns to the gallery with references visible.
+2. Tap or click a reference to copy it.
+3. On a desktop keyboard, **Shift+N** toggles the same mode.
+
+When a request involves gallery photos, identify all of the following before editing:
+
+- **Action:** add, remove, replace, or move.
+- **Category:** Dogs, Cats, Graphite, or Ink & Pen.
+- **Target:** one permanent reference for each existing portrait affected.
+- **Upload:** which attached image replaces or adds which portrait.
+- **Position:** for additions or moves, the exact destination or "bottom."
+
+If any item has more than one reasonable interpretation, ask one concise clarifying question and do not edit or deploy yet. In particular:
+
+- Never infer a category from a bare position such as "photo 7."
+- Never choose between "remove one copy" and "remove every copy" from an answer such as "remove."
+- Never choose between alternatives when the user says "either one"; state your recommendation and confirm it.
+- Never interpret device context such as "on my mobile" as information about where a photo was taken.
+- For destructive changes, briefly restate the exact references and action before editing.
+
+For gallery file changes:
+
+1. Keep existing permanent references for replacements and moves.
+2. Give additions the category's `nextReference` value, then increment that counter. Never reuse or decrement a reference.
+3. Name active files after the lowercase reference, using the real format, such as `photos/dog/d-024.jpg`.
+4. Move removed files to `photos-archive/`; never leave unlisted files in `photos/`.
+5. Run `npm run gallery:sync` after adding or replacing image contents.
+6. Run `npm test` before committing.
+
+For any local CSS or JavaScript change, run `npm run assets:sync`. This updates
+the content-hash revisions in `index.html` so browsers and Cloudflare fetch the
+new code. `npm test` fails when a local asset revision is stale.
+
+Run `npm run hooks:install` once in a fresh checkout. The pre-commit hook runs
+the fast gallery and asset validations. It intentionally does not rewrite or
+stage files; fix stale revisions with the appropriate sync command.
+
+Do not treat a successful deployment as proof that the requested behavior is correct. After deployment, verify the live gallery itself at desktop and mobile widths. Check the affected category, references, order, image loading, and absence of duplicates before telling the user it is done.
+
 ## How Sessions Work on claude.ai
 
 Each Claude Code session on claude.ai automatically creates a local feature branch (e.g. `claude/some-name`). This is just how the environment works — it cannot be avoided. **Do not mention this branch to the user.** Simply always push changes to `main` using `git push origin HEAD:main`, and the branch stays invisible in the background.
@@ -32,9 +79,10 @@ There is a `Stop` hook in the session container (`~/.claude/stop-hook-git-check.
 
 After every change, no matter how small:
 
-1. **Push directly to `main`** using `git push origin HEAD:main` — this works even from the session's local branch.
-2. If the session branch was pushed to the remote for any reason, delete it after: `git push origin --delete <branch-name>`
-3. Set git identity before committing if not already set:
+1. Run the relevant local checks. For gallery changes, this means `npm test`.
+2. **Push directly to `main`** using `git push origin HEAD:main` — this works even from the session's local branch.
+3. If the session branch was pushed to the remote for any reason, delete it after: `git push origin --delete <branch-name>`
+4. Set git identity before committing if not already set:
    ```
    git config user.email noreply@anthropic.com
    git config user.name Claude
@@ -52,13 +100,14 @@ After pushing, always:
    > "Done! Now we wait while the pixels shuffle into place — just a couple minutes!"
    > "Change sent! Your site is in the oven — it'll be piping hot in a minute or two!"
 3. Poll or monitor the action run until it completes (check every 30–60 seconds).
-4. Once it succeeds, let the user know with something like:
+4. Once it succeeds, verify the requested change on the live site itself. For gallery changes, check both desktop and mobile layouts and confirm the affected photos load in the intended category and order.
+5. Then let the user know with something like:
    > "All [synonym for done]! You can now view the live site with your changes: https://petportraitsbykaren.com/ — you may need to hit **Refresh** in your browser to see the latest version."
 
    Rotate fun synonyms for "done" — e.g. "cooked", "baked and served", "hot off the press", "fresh out of the oven", "ship-shape", "locked and loaded", "done and dusted", "in the wild". Keep it light and whimsical but not over the top.
 
    Always refer to the site as **"the live site"** (not "production" or "the deployment").
-5. If the action fails, tell the user something went wrong and suggest looping in their techie.
+6. If the action fails, tell the user something went wrong and suggest looping in their techie.
 
 ## Live Site URL
 

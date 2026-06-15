@@ -1,0 +1,17 @@
+{
+  "name": "karen-pet-portraits",
+  "private": true,
+  "scripts": {
+    "assets:sync": "node scripts/sync_site_asset_revisions.mjs",
+    "assets:validate": "node scripts/validate_site_assets.mjs",
+    "gallery:sync": "node scripts/sync_gallery_revisions.mjs && npm run assets:sync",
+    "gallery:validate": "node scripts/validate_gallery.mjs",
+    "gallery:test": "node scripts/check_gallery_ui.mjs",
+    "hooks:install": "node scripts/install_git_hooks.mjs",
+    "precommit": "npm run gallery:validate && npm run assets:validate",
+    "test": "npm run gallery:validate && npm run assets:validate && npm run gallery:test"
+  },
+  "devDependencies": {
+    "playwright": "^1.59.1"
+  }
+}

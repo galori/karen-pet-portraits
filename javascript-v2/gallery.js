@@ -1,73 +1,131 @@
 // gallery.js
-// Dynamically loads images from photos_list.txt and displays them by category
+// Loads the ordered gallery manifest and provides stable references for edits.
 
-const GALLERY_CATEGORIES = [
-  { id: 'cats', label: 'Cats', folder: 'cat', prefix: 'c' },
-  { id: 'dogs', label: 'Dogs', folder: 'dog', prefix: 'd' },
-  { id: 'graphite', label: 'Graphite', folder: 'graphite', prefix: 'g' },
-  { id: 'ink', label: 'Ink & Pen', folder: 'ink_and_pen', prefix: 'i' }
-];
-
+const GALLERY_REFERENCE_STORAGE_KEY = 'gallery-references-visible';
 const masonryGallery = document.getElementById('masonry-gallery');
-let allPhotos = [];
+const gallerySection = document.getElementById('gallery');
+const referenceToggle = document.getElementById('gallery-reference-toggle');
+const referenceStatus = document.getElementById('gallery-reference-status');
+const referenceMessage = document.getElementById('gallery-reference-message');
+const referenceDone = document.getElementById('gallery-reference-done');
 
-function getCategoryFromPath(path) {
-  if (path.includes('/cat/')) return 'cats';
-  if (path.includes('/dog/')) return 'dogs';
-  if (path.includes('/graphite/')) return 'graphite';
-  if (path.includes('/ink_and_pen/')) return 'ink';
-  return null;
+let galleryCategories = [];
+let allPhotos = [];
+let referencesVisible = readStoredReferenceMode();
+let referenceMessageTimer;
+
+function readStoredReferenceMode() {
+  try {
+    return localStorage.getItem(GALLERY_REFERENCE_STORAGE_KEY) === 'true';
+  } catch {
+    return false;
+  }
 }
 
 function getDownloadName(photo) {
-  const ext = photo.path.split('.').pop().toLowerCase();
+  const ext = photo.src.split('.').pop().toLowerCase();
   return `portrait-by-karen.${ext}`;
 }
 
-let numbersVisible = false;
+function getAssetUrl(photo) {
+  return `${photo.src}?v=${photo.revision}`;
+}
 
 function initializeGallery(photos) {
-  masonryGallery.innerHTML = ''; // Clear any existing content
-  const categoryCounts = {};
+  masonryGallery.innerHTML = '';
 
   photos.forEach(photo => {
-    categoryCounts[photo.category] = (categoryCounts[photo.category] || 0) + 1;
-    const category = GALLERY_CATEGORIES.find(item => item.id === photo.category);
-    const photoNumber = `${category.prefix}-${categoryCounts[photo.category]}`;
     const div = document.createElement('div');
-    // Add category as a data attribute and initially hide if not 'cats'
     div.className = `gallery-item relative ${photo.category !== 'dogs' ? 'hidden' : ''}`;
     div.dataset.category = photo.category;
-    div.dataset.index = photoNumber;
+    div.dataset.reference = photo.id;
     div.innerHTML = `
-      <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
-      <div class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-75 text-white text-lg font-bold rounded-full flex items-center justify-center shadow-lg" hidden>${photoNumber}</div>
+      <img src="${getAssetUrl(photo)}" alt="${photo.alt}" loading="lazy" decoding="async" class="w-full h-auto rounded-lg gallery-img">
+      <button type="button" class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-90 text-white text-base font-bold rounded-full flex items-center justify-center shadow-lg" aria-label="Copy gallery reference ${photo.id}" title="Copy ${photo.id}" hidden>${photo.id}</button>
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
         <div class="flex space-x-4">
-          <a href="${photo.path}" download="${getDownloadName(photo)}" class="text-white hover:text-green-400 download-icon" title="Download">
+          <a href="${getAssetUrl(photo)}" download="${getDownloadName(photo)}" class="text-white hover:text-green-400 download-icon" title="Download">
             <i class="fas fa-download text-3xl"></i>
           </a>
-          <button class="expand-icon" data-img="${photo.path}" title="Expand" style="background:transparent;border:none;outline:none;cursor:pointer;">
+          <button class="expand-icon" data-img="${getAssetUrl(photo)}" title="Expand" style="background:transparent;border:none;outline:none;cursor:pointer;">
             <img src="images/icons/expand_icon.png" alt="Expand" class="w-8 h-8">
           </button>
         </div>
       </div>
     `;
+
+    div.querySelector('.gallery-number-badge').addEventListener('click', event => {
+      event.stopPropagation();
+      copyGalleryReference(photo.id);
+    });
     masonryGallery.appendChild(div);
   });
 
-  // Use shared modal logic for expand icons
   if (window.SharedModal) {
     SharedModal.addExpandListeners('.expand-icon');
   }
+
+  setReferenceMode(referencesVisible);
 }
 
-function toggleGalleryNumbers() {
-  numbersVisible = !numbersVisible;
+function setReferenceMode(visible, { scrollToGallery = false } = {}) {
+  referencesVisible = visible;
+  document.body.classList.toggle('gallery-references-visible', visible);
+
   const badges = masonryGallery.querySelectorAll('.gallery-number-badge');
   badges.forEach(badge => {
-    badge.hidden = !numbersVisible;
+    badge.hidden = !visible;
   });
+
+  if (referenceToggle) {
+    referenceToggle.setAttribute('aria-pressed', String(visible));
+    referenceToggle.textContent = visible ? 'Hide gallery references' : 'Gallery references';
+  }
+  if (referenceStatus) {
+    referenceStatus.hidden = !visible;
+  }
+  if (visible) {
+    showReferenceMessage('Gallery references are on. Tap a reference to copy it.');
+  }
+
+  try {
+    localStorage.setItem(GALLERY_REFERENCE_STORAGE_KEY, String(visible));
+  } catch {
+    // Reference mode still works when storage is unavailable.
+  }
+
+  if (visible && scrollToGallery) {
+    requestAnimationFrame(() => gallerySection.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  }
+}
+
+function showReferenceMessage(message) {
+  if (!referenceMessage) return;
+  clearTimeout(referenceMessageTimer);
+  referenceMessage.textContent = message;
+}
+
+async function copyGalleryReference(reference) {
+  try {
+    await navigator.clipboard.writeText(reference);
+  } catch {
+    const input = document.createElement('textarea');
+    input.value = reference;
+    input.setAttribute('readonly', '');
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    input.remove();
+  }
+
+  showReferenceMessage(`Copied ${reference}. You can paste it into your message.`);
+  referenceMessageTimer = setTimeout(() => {
+    if (referencesVisible) {
+      showReferenceMessage('Gallery references are on. Tap a reference to copy it.');
+    }
+  }, 3000);
 }
 
 // Keyboard shortcut: Shift+N to toggle image numbers
@@ -79,7 +137,7 @@ document.addEventListener('keydown', (e) => {
       (target.isContentEditable || target.matches('input, textarea, select'))) return;
 
   e.preventDefault();
-  toggleGalleryNumbers();
+  setReferenceMode(!referencesVisible);
 });
 
 function filterGalleryView(selectedCategory) {
@@ -93,7 +151,7 @@ function filterGalleryView(selectedCategory) {
   }
 
   // Update button styles
-  GALLERY_CATEGORIES.forEach(cat => {
+  galleryCategories.forEach(cat => {
     const btn = document.getElementById('btn-' + cat.id);
     if (btn) {
       if (cat.id === selectedCategory) {
@@ -105,26 +163,28 @@ function filterGalleryView(selectedCategory) {
   });
 }
 
-fetch('photos_list.txt')
-  .then(res => res.text())
-  .then(text => {
-    allPhotos = text.split('\n')
-      .map(line => line.trim())
-      .filter(line => line && !line.startsWith('//') && !line.endsWith('.DS_Store'))
-      .map(path => ({
-        path,
-        file: path.split('/').pop(),
-        category: getCategoryFromPath(path)
-      }))
-      .filter(photo => photo.category);
-    
-    initializeGallery(allPhotos); // Load all images into the DOM
-    filterGalleryView('dogs'); // Show 'dogs' by default and set button styles
+fetch(`gallery.json?v=${Date.now()}`, { cache: 'no-store' })
+  .then(res => {
+    if (!res.ok) throw new Error(`Gallery manifest returned ${res.status}`);
+    return res.json();
+  })
+  .then(manifest => {
+    galleryCategories = manifest.categories;
+    allPhotos = manifest.photos;
+    initializeGallery(allPhotos);
+    filterGalleryView('dogs');
+  })
+  .catch(error => {
+    console.error('Could not load gallery:', error);
+    masonryGallery.innerHTML = '<p class="gallery-load-error">The gallery could not be loaded. Please try refreshing the page.</p>';
   });
 
-GALLERY_CATEGORIES.forEach(cat => {
-  const btn = document.getElementById('btn-' + cat.id);
-  if (btn) {
-    btn.addEventListener('click', () => filterGalleryView(cat.id));
-  }
+document.querySelectorAll('.gallery-filter-link').forEach(button => {
+  button.addEventListener('click', () => filterGalleryView(button.id.replace('btn-', '')));
 });
+
+referenceToggle?.addEventListener('click', () => {
+  setReferenceMode(!referencesVisible, { scrollToGallery: !referencesVisible });
+});
+
+referenceDone?.addEventListener('click', () => setReferenceMode(false));
