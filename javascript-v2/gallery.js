@@ -20,9 +20,8 @@ function getCategoryFromPath(path) {
 }
 
 function getDownloadName(photo) {
-  const labels = { cats: 'cat', dogs: 'dog', graphite: 'graphite', ink: 'ink-pen' };
   const ext = photo.path.split('.').pop().toLowerCase();
-  return `${labels[photo.category] || photo.category}-portrait-by-karen.${ext}`;
+  return `portrait-by-karen.${ext}`;
 }
 
 function initializeGallery(photos) {
