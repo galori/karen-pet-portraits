@@ -21,7 +21,7 @@ function getCategoryFromPath(path) {
 
 function getDownloadName(photo) {
   const ext = photo.path.split('.').pop().toLowerCase();
-  return `portrait-by-Karen.${ext}`;
+  return `portrait-by-karen.${ext}`;
 }
 
 function initializeGallery(photos) {
