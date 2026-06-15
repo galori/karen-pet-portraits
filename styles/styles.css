@@ -176,6 +176,44 @@ html {
   }
 }
 
+/* Gallery number badges for referencing specific images */
+.gallery-keyboard-hint kbd {
+  background: #e2e8f0;
+  border: 1px solid #cbd5e1;
+  border-radius: 3px;
+  padding: 0.05rem 0.3rem;
+  font-family: inherit;
+  font-size: 0.65rem;
+  color: #64748b;
+}
+
+.gallery-number-badge {
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  transform: scale(0.9);
+  z-index: 5;
+}
+.gallery-number-badge:not(.hidden) {
+  transform: scale(1);
+}
+.gallery-number-badge.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Keyboard hint shown in the gallery nav area on desktop */
+.gallery-keyboard-hint {
+  font-size: 0.7rem;
+  color: #94a3b8;
+  margin-left: auto;
+  align-self: center;
+  white-space: nowrap;
+}
+@media (max-width: 640px) {
+  .gallery-keyboard-hint {
+    display: none;
+  }
+}
+
 .expand-icon img,
 .download-icon i,
 .download-icon svg {

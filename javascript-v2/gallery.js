@@ -24,15 +24,19 @@ function getDownloadName(photo) {
   return `portrait-by-karen.${ext}`;
 }
 
+let numbersVisible = false;
+
 function initializeGallery(photos) {
   masonryGallery.innerHTML = ''; // Clear any existing content
-  photos.forEach(photo => {
+  photos.forEach((photo, index) => {
     const div = document.createElement('div');
     // Add category as a data attribute and initially hide if not 'cats'
     div.className = `gallery-item relative ${photo.category !== 'dogs' ? 'hidden' : ''}`;
     div.dataset.category = photo.category;
+    div.dataset.index = index + 1; // 1-based index for human-friendly numbering
     div.innerHTML = `
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
+      <div class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-75 text-white text-xl font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-lg hidden">${index + 1}</div>
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
         <div class="flex space-x-4">
           <a href="${photo.path}" download="${getDownloadName(photo)}" class="text-white hover:text-green-400 download-icon" title="Download">
@@ -52,6 +56,29 @@ function initializeGallery(photos) {
     SharedModal.addExpandListeners('.expand-icon');
   }
 }
+
+function toggleGalleryNumbers() {
+  numbersVisible = !numbersVisible;
+  const badges = masonryGallery.querySelectorAll('.gallery-number-badge');
+  badges.forEach(badge => {
+    if (numbersVisible) {
+      badge.classList.remove('hidden');
+    } else {
+      badge.classList.add('hidden');
+    }
+  });
+}
+
+// Keyboard shortcut: Shift+N to toggle image numbers
+document.addEventListener('keydown', (e) => {
+  if (e.shiftKey && (e.key === 'N' || e.key === 'n')) {
+    // Don't toggle if user is typing in an input/textarea
+    const tag = document.activeElement.tagName.toLowerCase();
+    if (tag === 'input' || tag === 'textarea') return;
+    e.preventDefault();
+    toggleGalleryNumbers();
+  }
+});
 
 function filterGalleryView(selectedCategory) {
   const galleryItems = masonryGallery.children;
