@@ -183,10 +183,10 @@ html {
   z-index: 20 !important;
   pointer-events: none;
 }
-.gallery-number-badge:not(.hidden) {
+.gallery-number-badge:not([hidden]) {
   transform: scale(1);
 }
-.gallery-number-badge.hidden {
+.gallery-number-badge[hidden] {
   display: none;
 }
 

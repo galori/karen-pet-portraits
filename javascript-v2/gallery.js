@@ -36,7 +36,7 @@ function initializeGallery(photos) {
     div.dataset.index = index + 1; // 1-based index for human-friendly numbering
     div.innerHTML = `
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
-      <div class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-75 text-white text-xl font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-lg hidden">${index + 1}</div>
+      <div class="gallery-number-badge absolute top-3 left-3 bg-slate-800 bg-opacity-75 text-white text-xl font-bold rounded-full w-10 h-10 flex items-center justify-center shadow-lg" hidden>${index + 1}</div>
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
         <div class="flex space-x-4">
           <a href="${photo.path}" download="${getDownloadName(photo)}" class="text-white hover:text-green-400 download-icon" title="Download">
@@ -60,42 +60,21 @@ function initializeGallery(photos) {
 function toggleGalleryNumbers() {
   numbersVisible = !numbersVisible;
   const badges = masonryGallery.querySelectorAll('.gallery-number-badge');
-  const items = masonryGallery.querySelectorAll('.gallery-item');
-
-  badges.forEach((badge, idx) => {
-    const item = items[idx];
-    if (numbersVisible) {
-      // Show badge, push overlay down with lower z-index
-      badge.classList.remove('hidden');
-      badge.classList.add('z-10');
-      if (item) {
-        const overlay = item.querySelector('.overlay');
-        if (overlay) overlay.style.zIndex = '1';
-      }
-    } else {
-      // Hide badge, restore overlay z-index
-      badge.classList.add('hidden');
-      badge.classList.remove('z-10');
-      if (item) {
-        const overlay = item.querySelector('.overlay');
-        if (overlay) overlay.style.zIndex = '';
-      }
-    }
+  badges.forEach(badge => {
+    badge.hidden = !numbersVisible;
   });
-
-  console.log('Gallery numbers toggled:', numbersVisible);
 }
 
 // Keyboard shortcut: Shift+N to toggle image numbers
 document.addEventListener('keydown', (e) => {
-  if (e.shiftKey && (e.key === 'N' || e.key === 'n' || e.code === 'KeyN')) {
-    // Don't toggle if user is typing in an input/textarea
-    const tag = document.activeElement.tagName.toLowerCase();
-    if (tag === 'input' || tag === 'textarea') return;
-    e.preventDefault();
-    console.log('Shift+N pressed');
-    toggleGalleryNumbers();
-  }
+  if (!e.shiftKey || e.code !== 'KeyN' || e.repeat) return;
+
+  const target = e.target;
+  if (target instanceof HTMLElement &&
+      (target.isContentEditable || target.matches('input, textarea, select'))) return;
+
+  e.preventDefault();
+  toggleGalleryNumbers();
 });
 
 function filterGalleryView(selectedCategory) {
