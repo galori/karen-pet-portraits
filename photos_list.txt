@@ -16,6 +16,7 @@ photos/cat/IMG_5994.PNG
 photos/cat/IMG_5955.PNG
 photos/cat/IMG_5941.PNG
 photos/dog/photooutput3.png
+photos/dog/IMG_4598.jpeg
 photos/dog/IMG_4602.jpeg
 photos/dog/IMG_5988.PNG
 photos/dog/IMG_7810.JPG
