@@ -57,6 +57,7 @@ photos/ink_and_pen/IMG_5931.PNG
 photos/ink_and_pen/IMG_5868.PNG
 photos/ink_and_pen/IMG_5950.PNG
 photos/ink_and_pen/IMG_5968.PNG
+photos/ink_and_pen/IMG_4631.jpeg
 photos/graphite/IMG_2005.PNG
 photos/graphite/IMG_5965.PNG
 photos/graphite/IMG_5958.PNG
