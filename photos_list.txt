@@ -50,7 +50,6 @@ photos/ink_and_pen/IMG_5870.PNG
 photos/ink_and_pen/IMG_6010.PNG
 photos/ink_and_pen/IMG_6011.PNG
 photos/ink_and_pen/IMG_6013.PNG
-photos/ink_and_pen/IMG_5608.HEIC
 photos/ink_and_pen/IMG_6012.PNG
 photos/ink_and_pen/IMG_5924.PNG
 photos/ink_and_pen/IMG_6009.PNG
