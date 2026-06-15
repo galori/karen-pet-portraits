@@ -19,6 +19,12 @@ function getCategoryFromPath(path) {
   return null;
 }
 
+function getDownloadName(photo) {
+  const labels = { cats: 'cat', dogs: 'dog', graphite: 'graphite', ink: 'ink-pen' };
+  const ext = photo.path.split('.').pop().toLowerCase();
+  return `${labels[photo.category] || photo.category}-portrait-by-karen.${ext}`;
+}
+
 function initializeGallery(photos) {
   masonryGallery.innerHTML = ''; // Clear any existing content
   photos.forEach(photo => {
@@ -30,7 +36,7 @@ function initializeGallery(photos) {
       <img src="${photo.path}" alt="${photo.file}" class="w-full h-auto rounded-lg gallery-img">
       <div class="overlay absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity duration-300 rounded-lg cursor-pointer">
         <div class="flex space-x-4">
-          <a href="${photo.path}" download class="text-white hover:text-green-400 download-icon" title="Download">
+          <a href="${photo.path}" download="${getDownloadName(photo)}" class="text-white hover:text-green-400 download-icon" title="Download">
             <i class="fas fa-download text-3xl"></i>
           </a>
           <button class="expand-icon" data-img="${photo.path}" title="Expand" style="background:transparent;border:none;outline:none;cursor:pointer;">
