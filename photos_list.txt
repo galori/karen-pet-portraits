@@ -17,7 +17,7 @@ photos/cat/IMG_5955.PNG
 photos/cat/IMG_5941.PNG
 photos/dog/photooutput3.png
 photos/dog/IMG_4455.jpeg
-photos/dog/IMG_4606.jpeg
+photos/dog/IMG_4602.jpeg
 photos/dog/IMG_5769.PNG
 photos/dog/IMG_5988.PNG
 photos/dog/IMG_7810.JPG
@@ -33,7 +33,6 @@ photos/dog/IMG_0035.PNG
 photos/dog/IMG_5984.PNG
 photos/dog/IMG_5985.PNG
 photos/dog/IMG_4605.jpeg
-photos/dog/IMG_6722.PNG
 photos/dog/IMG_5997.PNG
 photos/dog/IMG_3150.jpeg
 photos/dog/IMG_6800.PNG
