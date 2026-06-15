@@ -41,6 +41,7 @@ photos/dog/IMG_6800.PNG
 photos/dog/IMG_6801.PNG
 photos/dog/IMG_5907.PNG
 photos/dog/IMG_3805.JPG
+photos/dog/photooutput2.png
 photos/ink_and_pen/IMG_6016.PNG
 photos/ink_and_pen/IMG_5871.PNG
 photos/ink_and_pen/IMG_5865.PNG
