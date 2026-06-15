@@ -60,22 +60,40 @@ function initializeGallery(photos) {
 function toggleGalleryNumbers() {
   numbersVisible = !numbersVisible;
   const badges = masonryGallery.querySelectorAll('.gallery-number-badge');
-  badges.forEach(badge => {
+  const items = masonryGallery.querySelectorAll('.gallery-item');
+
+  badges.forEach((badge, idx) => {
+    const item = items[idx];
     if (numbersVisible) {
+      // Show badge, push overlay down with lower z-index
       badge.classList.remove('hidden');
+      badge.classList.add('z-10');
+      if (item) {
+        const overlay = item.querySelector('.overlay');
+        if (overlay) overlay.style.zIndex = '1';
+      }
     } else {
+      // Hide badge, restore overlay z-index
       badge.classList.add('hidden');
+      badge.classList.remove('z-10');
+      if (item) {
+        const overlay = item.querySelector('.overlay');
+        if (overlay) overlay.style.zIndex = '';
+      }
     }
   });
+
+  console.log('Gallery numbers toggled:', numbersVisible);
 }
 
 // Keyboard shortcut: Shift+N to toggle image numbers
 document.addEventListener('keydown', (e) => {
-  if (e.shiftKey && (e.key === 'N' || e.key === 'n')) {
+  if (e.shiftKey && (e.key === 'N' || e.key === 'n' || e.code === 'KeyN')) {
     // Don't toggle if user is typing in an input/textarea
     const tag = document.activeElement.tagName.toLowerCase();
     if (tag === 'input' || tag === 'textarea') return;
     e.preventDefault();
+    console.log('Shift+N pressed');
     toggleGalleryNumbers();
   }
 });
